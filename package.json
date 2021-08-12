@@ -1,0 +1,27 @@
+{
+  "name": "laputin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohPak/Laputin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JohPak/Laputin/issues"
+  },
+  "homepage": "https://github.com/JohPak/Laputin#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "express": "^4.17.1",
+    "got": "^9.6.0",
+    "nodemon": "^2.0.12"
+  }
+}

@@ -16,16 +16,15 @@
 
 
             
-            <button onclick="window.print()" title="Tulosta" class="nappi">
             <form action="/hae" method="post">
-                    <span class="material-icons">print</span>
-                </button>
                 
                 <input type="text" class="noprint url" name="urlinput" value="{url}" onclick="this.select()">
                 <button type="submit" class="nappi">
                     <span class="material-icons">search</span>
                 </button>    
             </form>
+            
+            <button onclick="window.print()" title="Tulosta" class="nappi">Tulosta<span class="material-icons">print</span></button>
 
             <!-- <button onclick="lisaaYhdella('tuote')" title="Tulosta" class="nappi"><span class="material-icons">add</span></button>
             <button onclick="vahennaYhdella('tuote')" title="Tulosta" class="nappi"><span class="material-icons">remove</span></button> -->

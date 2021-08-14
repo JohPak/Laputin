@@ -65,6 +65,7 @@
         position: sticky;
         margin-bottom: 10px;
         padding: 10px;
+        
     }
     .url {
         width: 30vw;
@@ -99,6 +100,7 @@
     .nappi {
         height: 50px;
         width: 80px;
+        margin: 0px 7px;
     }
      .sivu {
         background-color: white;
@@ -134,6 +136,7 @@
          position: relative;
          z-index: 99999;
          margin-bottom: -8px;
+         width: 10vw;
         }
     .sliderteksti {
         margin-top: 5px;
@@ -143,3 +146,6 @@
         color: white;
         font-size: 0.8em;
      }
+form {
+    float: left;
+}

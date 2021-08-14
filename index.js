@@ -59,9 +59,7 @@ got(url).then(response => {
 
 // hae html
 app.get('/', function (req, res, next) {
-    console.log("Siirrytty app.get /-funktioon");
     if (url.includes("www.minimani.fi/")) {
-        
         
         // res.sendFile(__dirname+'/views/index.html');
         // nodessa ei voi käpistellä html-tiedostoja suoraan, joten muutetaan se stringiksi

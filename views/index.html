@@ -4,65 +4,11 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Laputin</title>
-        <style>
-            html, body {
-        height: 100%;
-    }
-    body {
-        margin: 0px;
-        background-color: lightblue;
-        font-family: Arial, sans-serif;
-        overflow-x: hidden; /* Hide horizontal scrollbar */
-    }
-     .wrapper {
-        height: 90%;
-    }
-    .wrapper .inner {
-        margin: 0 auto;
-        background-color:white;
-        height: 100%;
-        width: 66.6666666666vh;
-        line-height: 0;
-    }
-    .hintalappu {
-        margin: 0 auto;
-        background-color: rgb(255, 255, 255);
-        height: 100%;
-        width: 83%; /* TULOSTUSMARGINAALIT */
-        line-height:1;
-    }
-    .kuva {
-        display:flex;
-        justify-content:center;
-    }
-    div:focus {
-        background-color:rgb(255, 248, 174);
-    }
-    .menubar {
-        width: 100%;
-        background-color: rgb(68, 126, 162);
-        z-index: 9999;
-        position: sticky;
-        margin-bottom: 10px;
-        padding: 10px;
-    }
-    .url {
-        width: 50vw;
-        margin:10px;
-    }
-    @media print {
-        .noprint {
-           visibility: hidden;
-        }
-        html, body {
-            height:100%; 
-            margin: 0 !important; 
-            padding: 0 !important;
-            overflow: hidden;
-        }
-     }
-            </style>
+        <title>Hintalaputin - Lantahiputin</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="/styles/style.css" rel="stylesheet">
+  
+      
     </head>
     <body>
     
@@ -70,10 +16,14 @@
 
             
             <form action="/hae" method="post">
-                <button onclick="window.print()">TULOSTA</button>
-
+                <button onclick="window.print()" title="Tulosta" class="nappi">
+                    <span class="material-icons">print</span>
+                </button>
+                
                 <input type="text" class="noprint url" name="urlinput" value="{url}" onclick="this.select()">
-                <button type="submit">HAE</button>
+                <button type="submit" class="nappi">
+                    <span class="material-icons">search</span>
+                </button>
             </form>
             
             <!--<div class="noprint">
@@ -82,39 +32,25 @@
 
         </div>
 
-        <div class="wrapper">
-            <div class="inner">&nbsp;
-    
-                <div class="hintalappu">
-    
-                <div class="kuva">
-                    <img src="https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" style="width:100%" id="kuvakoko">
-                </div>
-                <div style="font-weight: bold; font-size: 4vh; margin-top: 2%;" contenteditable="true" tabindex="1">
-                    {tuote}
-                </div>
-                <div style="font-size: 1.2vh; line-height: 4vh; color:#9f9f9f" contenteditable="true" tabindex="2">
-                    {ean}
-                </div>
-                    <div style="font-size: 8vh; font-weight: bold;" contenteditable="true" tabindex="3">{hinta}</div>
-                    <div style="font-size: 1.6vh; line-height: 1.8vh;" contenteditable="true" tabindex="4">{kuvaus}</div>
-                    
-    
-    
-                </div>
-    
+       
+    <div class="tausta">
+        <div class="sivu">
+            <div class="taustakuva noprint">
+                <img src="/img/kehys.png" id="taustakuva">
+            </div>
+            <div class="kuva">
+                <img src="https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" id="kuvakoko">
+            </div>
+            <div class="tuote tekstit">{tuote}</div>
+            <div class="ean tekstit">{ean}</div>
+            <div class="hinta tekstit">{hinta}</div>
+            <div class="kuvaus tekstit">{kuvaus}</div>
             </div>
         </div>
-        <!-- <script>
-            var slider = document.getElementById("myRange");
-            var output = document.getElementById("kuvakoko");
-            output.style.width = slider.value; // Display the default slider value
-            
-            // Update the current slider value (each time you drag the slider handle)
-            slider.oninput = function() {
-                output = this.value;
-                document.getElementById("kuvakoko").style.width = output + "vw";
-            } 
-            </script> -->
+
+
+
+
+
     </body>
     </html>

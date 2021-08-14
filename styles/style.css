@@ -1,0 +1,123 @@
+
+    html, body {
+        height: 100%;
+        }
+        @font-face {
+            font-family: AntiqueOliveBlack; src: url('/fonts/AntiqueOliveStd-Black.otf');
+        }
+        @font-face {
+            font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf');
+        }
+
+    body {
+        margin: 0px;
+        background-color: lightblue;
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+    }
+    
+    .wrapper {
+        height: 90%;
+    }
+    .inner {
+        margin: 0 auto;
+        background-image: url(/img/kehys.png);
+        background-size: 100%;
+        height: 100%;
+        width: 66.6666666666vh;
+        line-height: 0;
+    }
+    .hintalappu {
+        margin: 0 auto;
+        height: 100%;
+        width: 75%; /* TULOSTUSMARGINAALIT */
+        line-height:1;
+    }
+    .kuva {
+        display:flex;
+        justify-content:center;
+        padding-top: 16vh;
+        position: relative;
+        z-index: -999999;
+    }
+    #kuvakoko {
+        width: 30vh;
+        position: relative;
+        z-index: -999;
+    }
+    div:focus {
+        background-color:rgb(255, 248, 174);
+    }
+    .menubar {
+        width: 100%;
+        background-color: rgb(68, 126, 162);
+        z-index: 9999;
+        position: sticky;
+        margin-bottom: 10px;
+        padding: 10px;
+    }
+    .url {
+        width: 50vw;
+        border: none;
+        height: 23px;
+        vertical-align: super;
+        padding: 8px;
+        border-radius: 4px;
+    }
+    .tuote {
+        font-family: AntiqueOliveBlack;
+        font-size: 4vh;
+        margin-top: 2%;
+    }
+    .kuvaus {
+        font-family: AntiqueOliveRoman;
+        --font-size: 1.3vh;
+        line-height: calc((var(--font-size))*1.2);
+        font-size: var(--font-size);
+    }
+    .ean {
+        font-family: AntiqueOliveRoman;
+        font-size: 1.2vh;
+        line-height: 1.6vh;
+        margin: 2px 0;
+        color: #b5b5b5;
+    }
+    .hinta {
+        font-family: AntiqueOliveBlack;
+        font-size: 8vh;
+    }
+    .nappi {
+        height: 50px;
+        width: 80px;
+    }
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+        html, body {
+            height:100%; 
+            margin: 0 !important; 
+            padding: 0 !important;
+            overflow: hidden;
+        }
+     }
+     .sivu {
+        background-color: white;
+        position: absolute;
+        z-index: -999;
+        --korkeus: 85vh;
+        --leveys: calc( ( var( --korkeus ) ) / 1.41 );
+        height: var(--korkeus);
+        width: var(--leveys);
+     }
+     #taustakuva {
+         height: 85vh;
+         position: absolute;
+         z-index: -99999;
+     }
+     .tekstit {
+         padding: 0 7vh;
+     }
+     .tausta {
+        justify-content: center;
+        display: flex;
+     }

@@ -13,6 +13,7 @@
         margin: 0px;
         background-color: lightblue;
         overflow-x: hidden; /* Hide horizontal scrollbar */
+        overflow-y: hidden; /* Hide vertical scrollbar */
     }
     
     .wrapper {
@@ -40,7 +41,7 @@
         z-index: 998;
     }
     #kuvakoko {
-        width: 30vh;
+        width: 40%;
         position: relative;
         z-index: -999;
     }
@@ -56,7 +57,7 @@
         padding: 10px;
     }
     .url {
-        width: 50vw;
+        width: 30vw;
         border: none;
         height: 23px;
         vertical-align: super;
@@ -66,7 +67,7 @@
     .tuote {
         font-family: AntiqueOliveBlack;
         font-size: 4vh;
-        margin-top: 2%;
+        margin-top: 0;
     }
     .kuvaus {
         font-family: AntiqueOliveRoman;
@@ -122,4 +123,24 @@
      .tausta {
         justify-content: center;
         display: flex;
+     }
+     /* .slider { KEHYSKUVAN PÄÄLLÄ
+        position: absolute;
+        z-index: 9999999;
+        --korkeus: 85vh;
+        --leveys: calc( ( var( --korkeus ) ) / 1.41 );
+        width: var(--leveys);
+     } */
+     .slider {
+         position: relative;
+         z-index: 99999;
+         margin-bottom: -8px;
+        }
+        .sliderteksti {
+        margin-top: 5px;
+        margin-left: 5px;
+        position: absolute;
+        font-family: AntiqueOliveRoman;
+        color: white;
+        font-size: 0.8em;
      }

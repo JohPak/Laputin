@@ -14,21 +14,30 @@
     
         <div class="menubar noprint">
 
+
             
+            <button onclick="window.print()" title="Tulosta" class="nappi">
             <form action="/hae" method="post">
-                <button onclick="window.print()" title="Tulosta" class="nappi">
                     <span class="material-icons">print</span>
                 </button>
                 
                 <input type="text" class="noprint url" name="urlinput" value="{url}" onclick="this.select()">
                 <button type="submit" class="nappi">
                     <span class="material-icons">search</span>
-                </button>
+                </button>    
             </form>
+
+            <!-- <button onclick="lisaaYhdella('tuote')" title="Tulosta" class="nappi"><span class="material-icons">add</span></button>
+            <button onclick="vahennaYhdella('tuote')" title="Tulosta" class="nappi"><span class="material-icons">remove</span></button> -->
+
+            <label class="sliderteksti">Tuotekuvan korkeus</label>
+            <input type="range" min="-100" max="100" value="40" class="slider" id="kuvakorkeus">
+
+            <label class="sliderteksti">Tuotekuvan koko</label>
+            <input type="range" min="0" max="90" value="40" class="slider" id="myRange" title="Säädä tuotekuvan kokoa">
             
-            <!--<div class="noprint">
-                <input type="range" min="1" max="200" value="100" class="slider" id="myRange">
-              </div>    -->
+            <label class="sliderteksti">Tekstin sijainti</label>
+            <input type="range" min="-30" max="90" value="40" class="slider" id="slidertekstikorkeus">
 
         </div>
 
@@ -41,7 +50,7 @@
             <div class="kuva" tabindex="-1">
                 <img src="https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" id="kuvakoko">
             </div>
-            <div class="tuote tekstit" contenteditable="true" tabindex="1">{tuote}</div>
+            <div class="tuote tekstit" contenteditable="true" tabindex="1" style="margin-top: 0vh;">{tuote}</div>
             <div class="ean tekstit" contenteditable="true" tabindex="2">{ean}</div>
             <div class="hinta tekstit" contenteditable="true" tabindex="3">{hinta}</div>
             <div class="kuvaus tekstit" contenteditable="true" tabindex="4">{kuvaus}</div>
@@ -49,7 +58,47 @@
         </div>
 
 
+        <script>
+            var slider = document.getElementById("myRange");
+            var sliderKuvakorkeus = document.getElementById("kuvakorkeus");
+            var sliderTekstikorkeus = document.getElementById("slidertekstikorkeus");
+            var output = document.getElementById("kuvakoko");
+            var outputTekstikorkeus = document.getElementsByClassName("tuote")[0];
+            output.style.width = slider.value; // Display the default slider value
+            output.style.width = sliderKuvakorkeus.value; // Display the default slider value
+            outputTekstikorkeus.style.width = sliderTekstikorkeus.value; // Display the default slider value
+            
+            // Update the current slider value (each time you drag the slider handle)
+            slider.oninput = function() {
+                output = this.value;
+                document.getElementById("kuvakoko").style.width = output + "%";
+            } 
+            sliderKuvakorkeus.oninput = function() {
+                output = this.value;
+                document.getElementById("kuvakoko").style.marginTop = output + "%";
+            } 
+            slidertekstikorkeus.oninput = function() {
+                outputTekstikorkeus = this.value;
+                document.getElementsByClassName("tuote")[0].style.marginTop = outputTekstikorkeus + "%";
+                console.log(outputTekstikorkeus);
+            } 
 
+
+            lisaaYhdella = function(luokannimi) {
+                let current = document.getElementsByClassName(luokannimi)[0].style.marginTop;
+                current = current.replace(/^[0-9 ()+-]+$/,''); //poistetaan kaikki muut paitsi numerot
+                current = parseInt(current);
+                current +=1;
+                document.getElementsByClassName("tuote")[0].style.marginTop = current + "vh";
+            }
+            vahennaYhdella = function(luokannimi) {
+                let current = document.getElementsByClassName(luokannimi)[0].style.marginTop;
+                current = current.replace(/^[0-9 ()+-]+$/,''); //poistetaan kaikki muut paitsi numerot
+                current = parseInt(current);
+                current -=1;
+                document.getElementsByClassName("tuote")[0].style.marginTop = current + "vh";
+            }
+            </script>
 
 
     </body>

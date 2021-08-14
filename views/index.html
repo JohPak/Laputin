@@ -33,18 +33,18 @@
         </div>
 
        
-    <div class="tausta">
-        <div class="sivu">
-            <div class="taustakuva noprint">
-                <img src="/img/kehys.png" id="taustakuva">
-            </div>
-            <div class="kuva">
+    <div class="tausta" tabindex="-1">
+        <div class="taustakuva noprint" tabindex="-1">
+            <img src="/img/kehys.png" id="taustakuva">
+        </div>
+        <div class="sivu" tabindex="-1">
+            <div class="kuva" tabindex="-1">
                 <img src="https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" id="kuvakoko">
             </div>
-            <div class="tuote tekstit">{tuote}</div>
-            <div class="ean tekstit">{ean}</div>
-            <div class="hinta tekstit">{hinta}</div>
-            <div class="kuvaus tekstit">{kuvaus}</div>
+            <div class="tuote tekstit" contenteditable="true" tabindex="1">{tuote}</div>
+            <div class="ean tekstit" contenteditable="true" tabindex="2">{ean}</div>
+            <div class="hinta tekstit" contenteditable="true" tabindex="3">{hinta}</div>
+            <div class="kuvaus tekstit" contenteditable="true" tabindex="4">{kuvaus}</div>
             </div>
         </div>
 

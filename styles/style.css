@@ -37,14 +37,14 @@
         justify-content:center;
         padding-top: 16vh;
         position: relative;
-        z-index: -999999;
+        z-index: 998;
     }
     #kuvakoko {
         width: 30vh;
         position: relative;
         z-index: -999;
     }
-    div:focus {
+    .tekstit:focus {
         background-color:rgb(255, 248, 174);
     }
     .menubar {
@@ -103,7 +103,7 @@
      .sivu {
         background-color: white;
         position: absolute;
-        z-index: -999;
+        /* z-index: -999; */
         --korkeus: 85vh;
         --leveys: calc( ( var( --korkeus ) ) / 1.41 );
         height: var(--korkeus);
@@ -111,11 +111,13 @@
      }
      #taustakuva {
          height: 85vh;
-         position: absolute;
-         z-index: -99999;
+         position: relative;
+         z-index: 999;
      }
      .tekstit {
          padding: 0 7vh;
+         position:relative;
+         z-index: 9999999;
      }
      .tausta {
         justify-content: center;

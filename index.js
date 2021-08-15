@@ -6,6 +6,8 @@ const cheerio = require('cheerio');
 const got = require('got');
 const http = require('http');
 const express = require('express');
+const port = 8080
+const path = require('path');
 
 let app = express();
 
@@ -91,7 +93,10 @@ app.post('/hae', function (req, res, next) {
 })
 
 
-app.listen(8080);
+app.listen(process.env.PORT || port, () => { //Herokua varten. Heroku asettaa portin process.env.PORT:iin
+    console.log(`Laputin app listening at http://localhost:${port}`)
+    console.log(process.env.PORT ? `Herokun antama portti ${process.env.PORT}` : ``);
+  })  
 
 
 

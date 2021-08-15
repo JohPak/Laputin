@@ -112,7 +112,7 @@
         justify-content: center;
         display: flex;
         transform: scale(78%);
-        top: -10vh;
+        transform-origin: top;
         position: relative;
     }
     fieldset {

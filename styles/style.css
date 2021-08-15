@@ -1,16 +1,5 @@
-@media print {
-    .noprint {
-       visibility: hidden;
-    }
     html, body {
-        height:100%; 
-        margin: 0 !important; 
-        padding: 0 !important;
-        overflow: hidden;
-    }
- }
-    html, body {
-        height: 100%;
+        /* height: 100%; */
         }
         @font-face {
             font-family: AntiqueOliveBlack; src: url('/fonts/AntiqueOliveStd-Black.otf');
@@ -23,7 +12,7 @@
         margin: 0px;
         background-color: lightblue;
         overflow-x: hidden; /* Hide horizontal scrollbar */
-        overflow-y: hidden; /* Hide vertical scrollbar */
+        /* overflow-y: hidden; */
     }
     
     .wrapper {
@@ -55,9 +44,6 @@
         position: relative;
         z-index: -999;
     }
-    .tekstit:focus {
-        background-color:rgb(255, 248, 174, 0.5);
-    }
     .menubar {
         width: 100%;
         background-color: rgb(68, 126, 162);
@@ -68,12 +54,10 @@
         
     }
     .url {
-        width: 30vw;
-        border: none;
-        height: 23px;
-        vertical-align: super;
-        padding: 8px;
-        border-radius: 4px;
+        width: 20vw;
+        /* border: none;
+        height: 50px;
+        border-radius: 4px; */
     }
     .tuote {
         font-family: AntiqueOliveBlack;
@@ -97,55 +81,109 @@
         font-family: AntiqueOliveBlack;
         font-size: 8vh;
     }
-    .nappi {
-        height: 50px;
-        width: 80px;
-        margin: 0px 7px;
-    }
-     .sivu {
+    .sivu {
         background-color: white;
         position: absolute;
         /* z-index: -999; */
-        --korkeus: 85vh;
+        --korkeus: 100vh;
         --leveys: calc( ( var( --korkeus ) ) / 1.41 );
         height: var(--korkeus);
         width: var(--leveys);
-     }
-     #taustakuva {
-         height: 85vh;
-         position: relative;
-         z-index: 999;
-     }
-     .tekstit {
-         padding: 0 7vh;
-         position:relative;
-         z-index: 9999999;
-     }
-     .tausta {
+    }
+    #taustakuva {
+        height: 100vh;
+        position: relative;
+        z-index: 999;
+    }
+    .tekstit {
+        padding: 0 7vh;
+        position:relative;
+        z-index: 9999999;
+    }
+    .tekstit:focus {
+        background-color:rgb(255, 248, 174, 0.5);
+    }
+    .tekstit:hover {
+        background-color:rgb(255, 248, 174, 0.5);
+    }
+    .tausta {
         justify-content: center;
         display: flex;
-     }
-     /* .slider { KEHYSKUVAN PÄÄLLÄ
-        position: absolute;
-        z-index: 9999999;
-        --korkeus: 85vh;
-        --leveys: calc( ( var( --korkeus ) ) / 1.41 );
-        width: var(--leveys);
-     } */
-     .slider {
-         position: relative;
-         z-index: 99999;
-         margin-bottom: -8px;
-         width: 10vw;
-        }
-    .sliderteksti {
-        margin-top: 5px;
-        margin-left: 5px;
-        position: absolute;
+        transform: scale(78%);
+        top: -10vh;
+        position: relative;
+    }
+    fieldset {
+        font-size: 1em;
+        font-family: sans-serif;
+        margin-right: 1.3em;
+        border: 0;
+    }
+    
+    input, button {
+        font-size: inherit;
+        padding: 0.2em;
+        margin: 0.1em 0.2em;
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+        height:40px;
+    }
+    form {
+        display: inline;
+    }
+    button {
+        width: 80px;
+    }
+    .slider {
+        height: auto;
+        width: 100px;
+    }
+    label {
         font-family: AntiqueOliveRoman;
         color: white;
         font-size: 0.8em;
+        display: block;
+        padding-left: 5px;
+    }
+    .testi {
+        width: max-content;
+        position: relative;
+        display: inline-block;
+        top: 1em;
+        padding-bottom: 1em;
+    }
+    input[type=text] {
+        width: 20vw;
+        border-radius: 4px;
+        border: 0;
+        top: -3px;
+        position: relative;
+    }
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+        /* html, body {
+            height: 100% !important; 
+            margin: 0 !important; 
+            padding: 0 !important;
+            overflow: hidden;
+        } */
+        input, button, fieldset, .menubar {
+            display: none;
+        }
+        .sivu {
+            overflow: hidden;
+        }
+        .tausta {
+            transform: scale(100%);
+            top: 0;
+            width: 100%;
+            height: 100%;
+            /* pakottaa tulostamaan vain yhden sivun */
+            position: fixed;
+        }
+
+        
      }
-form {
-    float: left;
-}

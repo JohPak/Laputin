@@ -41,6 +41,7 @@
     }
     #kuvakoko {
         width: 40%;
+        height: 40%;
         position: relative;
         z-index: -999;
     }
@@ -63,6 +64,7 @@
         font-family: AntiqueOliveBlack;
         font-size: 4vh;
         margin-top: 0;
+        text-transform: uppercase;
     }
     .kuvaus {
         font-family: AntiqueOliveRoman;

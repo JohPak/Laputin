@@ -74,6 +74,7 @@ app.get('/', function (req, res, next) {
         
         html = html.replace("https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png", kuva);
         html = html.replace("{tuote}", tuote);
+        html = html.replace("Lantahiputin", tuote);
         html = html.replace("{ean}", ean);
         html = html.replace("{hinta}", hinta + " €");
         html = html.replace("{kuvaus}", kuvaus);

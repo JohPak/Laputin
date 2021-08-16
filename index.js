@@ -21,7 +21,7 @@ app.use(express.json()) // To parse the incoming requests with JSON payloads
 // app.use(express.static('public')) 
 app.use(express.static(__dirname)); //NODEN käynnistyssijainti - saattaa muuttua jos appin siirtää jonnekin
 
-let url= "";
+let url= "https://www.minimani.fi/vallila-verhokappa-harmonia-green-rust-60x250-cm.html";
 let ean = "ean-koodi";
 let tuote = "tuote";
 let hinta = "hinta";

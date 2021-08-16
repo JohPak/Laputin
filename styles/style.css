@@ -50,9 +50,7 @@
         background-color: rgb(68, 126, 162);
         z-index: 9999;
         position: sticky;
-        margin-bottom: 10px;
-        padding: 10px;
-        
+        margin-bottom: 10px;        
     }
     .url {
         width: 20vw;

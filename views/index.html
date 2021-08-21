@@ -27,8 +27,10 @@
                     
                     <button onclick="tulostareunat()" title="Valitse tämä tulostaaksesi mustien kehysten kanssa"><span id="tulostareunatcheckbox" class="material-icons">check_box_outline_blank</span>Tulosta kehykset</button>
                     
-                    
                     <button onclick="kaanna()" title="Käännä kuvaa"><span class="material-icons">rotate_right</span>Käännä</button>
+                    
+                    <button onclick="suurennaesikatselua(1.05)" title="Suurenna esikatsekerroinvaa"><span class="material-icons">add</span></button>
+                    <button onclick="suurennaesikatselua(0.95)" title="Pienennä esikatsekerroinvaa"><span class="material-icons">remove</span></button>
                     
                     <div class="sliderdiv">
                         <div class="testi noprint">
@@ -55,7 +57,10 @@
             </fieldset>        
                 
         </div>  
-            
+    
+    <div class="spacer">
+        &nbsp;
+    </div>
             
     <div class="tausta" tabindex="-1">
         <div class="taustakuva noprint" tabindex="-1">
@@ -144,6 +149,14 @@
                     document.querySelector('#tulostareunatcheckbox').innerHTML = "check_box_outline_blank";
                     // console.log("poista kehykset");
                 }
+            }
+
+            let skaalaus = 78;
+            suurennaesikatselua = function(kerroin) {
+                kerroin = parseFloat(kerroin);
+                console.log("Kerroin ", kerroin + " * " + skaalaus + " = " + skaalaus*kerroin);
+                skaalaus = skaalaus * kerroin;
+                document.querySelector('.tausta').style.transform = `scale(${skaalaus}%)`;
             }
 
 

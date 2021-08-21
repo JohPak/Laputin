@@ -16,34 +16,40 @@
 
             <fieldset class="noprint">
                 <form action="/hae" method="post" class="noprint">
-                    <input type="text" class="noprint" name="urlinput" value="{url}" onclick="this.select()">
-                    <button type="submit" title="Syötä tuotteen www-osoite ja paina Hae." class="noprint">
-                        <span class="material-icons">search</span>
+                    <input type="text" class="noprint" name="urlinput" value="{url}" onclick="this.select()" title="Syötä tuotteen www-osoite ja paina Hae">
+                    <button type="submit" title="Syötä tuotteen www-osoite ja paina Hae" class="noprint" style="width: 100px;">
+                        <span class="material-icons">search</span>Hae
                     </button>
                 </form> 
+                
+                <br>   
+                    <button onclick="window.print()" title="Tulosta"><span class="material-icons">print</span>Tulosta</button>
                     
-                    <button onclick="window.print()" title="Tulosta"><span class="material-icons">print</span></button>
+                    <button onclick="tulostareunat()" title="Valitse tämä tulostaaksesi mustien kehysten kanssa"><span id="tulostareunatcheckbox" class="material-icons">check_box_outline_blank</span>Tulosta kehykset</button>
                     
-                    <button onclick="kaanna()" title="Käännä kuvaa"><span class="material-icons">rotate_right</span></button>
                     
-                    <div class="testi noprint">
-                        <label class="sliderteksti">Tuotekuvan koko</label>
-                        <input type="range" min="0" max="90" value="40" class="slider" id="myRange" title="Säädä tuotekuvan kokoa">
-                    </div>
+                    <button onclick="kaanna()" title="Käännä kuvaa"><span class="material-icons">rotate_right</span>Käännä</button>
                     
-                    <div class="testi noprint">
-                        <label class="sliderteksti" for="kuvakorkeus">Tuotekuvan sijainti</label>
-                        <input type="range" min="-100" max="100" value="0" class="slider" id="kuvakorkeus">
-                    </div>
-
-                    <div class="testi noprint">
-                        <label class="sliderteksti">Tekstin sijainti</label>
-                        <input type="range" min="-30" max="90" value="0" class="slider" id="slidertekstikorkeus">
-                    </div>
-                    
-                    <div class="testi noprint">
-                        <label class="sliderteksti">Tuotetietojen koko</label>
-                        <input type="range" min="0.85" max="1.8" value="1.3" class="slider" id="sliderkuvausteksti" step="0.005">
+                    <div class="sliderdiv">
+                        <div class="testi noprint">
+                            <label class="sliderteksti">Tuotekuvan koko</label>
+                            <input type="range" min="0" max="90" value="40" class="slider" id="myRange" title="Säädä tuotekuvan kokoa">
+                        </div>
+                        
+                        <div class="testi noprint">
+                            <label class="sliderteksti" for="kuvakorkeus">Tuotekuvan sijainti</label>
+                            <input type="range" min="-100" max="100" value="0" class="slider" id="kuvakorkeus">
+                        </div>
+                        
+                        <div class="testi noprint">
+                            <label class="sliderteksti">Tekstin sijainti</label>
+                            <input type="range" min="-30" max="90" value="0" class="slider" id="slidertekstikorkeus">
+                        </div>
+                        
+                        <div class="testi noprint">
+                            <label class="sliderteksti">Tuotetietojen koko</label>
+                            <input type="range" min="0.85" max="1.8" value="1.3" class="slider" id="sliderkuvausteksti" step="0.005">
+                        </div>
                     </div>
                     
             </fieldset>        
@@ -58,6 +64,7 @@
         <div class="sivu" tabindex="-1">
             <div class="kuva" tabindex="-1">
                 <img src="https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" id="kuvakoko">
+
             </div>
             <div class="tuote tekstit" contenteditable="true" tabindex="1" style="margin-top: 0vh;" title="Klikkaa muokataksesi tekstiä">{tuote}</div>
             <div class="ean tekstit" contenteditable="true" tabindex="2" title="Klikkaa muokataksesi tekstiä">{ean}</div>
@@ -110,6 +117,37 @@
                 let apuAsteet = "rotate(" + asteet + "deg)"
                 document.getElementById("kuvakoko").style.transform= apuAsteet;
             }
+
+
+           
+            // Tarkistetaan tuliko kuva oikein. Jos ei, lisätään kuva-urlin perään "_1"
+            window.addEventListener("load", event => {
+            var image = document.querySelector('#kuvakoko');
+            var isLoaded = image.complete && image.naturalHeight !== 0;
+                if(!isLoaded) {
+                    image = image.src.replace(".jpg", "_1.jpg");
+                    document.querySelector('#kuvakoko').src = image;
+                    console.log("Alkuperäistä kuvaa ei löytynyt. Lisätään urlin perään '_1.jpg'");
+                };
+            });
+
+
+            // tarkistetaan onko "tulosta kehykset" valittuna
+            tulostareunat = function() {
+                if (document.querySelector('#tulostareunatcheckbox').innerHTML == "check_box_outline_blank") {
+                    // console.log("Tulosta kehykset");
+                    document.querySelector('.taustakuva').classList.remove('noprint');
+                    document.querySelector('#tulostareunatcheckbox').innerHTML = "check_box";
+                }
+                else if (document.querySelector('#tulostareunatcheckbox').innerHTML == "check_box") {
+                    document.querySelector('.taustakuva').classList.add('noprint');
+                    document.querySelector('#tulostareunatcheckbox').innerHTML = "check_box_outline_blank";
+                    // console.log("poista kehykset");
+                }
+            }
+
+
+                
 
             </script>
 

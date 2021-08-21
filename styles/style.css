@@ -10,7 +10,8 @@
 
     body {
         margin: 0px;
-        background-color: lightblue;
+        /* background-color: lightblue; */
+        background-image: radial-gradient(#ffffff, #ec6707);
         overflow-x: hidden; /* Hide horizontal scrollbar */
         /* overflow-y: hidden; */
     }
@@ -47,10 +48,13 @@
     }
     .menubar {
         width: 100%;
-        background-color: rgb(68, 126, 162);
+        /* background-color: rgb(68, 126, 162); */
+        background-color: #626262;
+        /* background-image: linear-gradient(#a5a09d, #7c7670); */
         z-index: 9999;
         position: sticky;
-        margin-bottom: 10px;        
+        margin-bottom: 10px;    
+        padding-top: 10px;    
     }
     .url {
         width: 20vw;
@@ -114,9 +118,8 @@
         position: relative;
     }
     fieldset {
-        font-size: 1em;
+        font-size: 0.9em;
         font-family: sans-serif;
-        margin-right: 1.3em;
         border: 0;
     }
     
@@ -130,15 +133,67 @@
         height:40px;
     }
     form {
-        display: inline;
+        display: inline-flex;
+        width: 100%;
     }
     button {
-        width: 80px;
+        width: max-content;
+        padding: 0 15px;
+        background-color: #ec6707;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        font-size: 12px;
+        transition-duration: 0.4s;
+        border-radius: 4px;
     }
+    button:hover {
+        background-color: #ff832b;
+        color: white;
+    }
+    .sliderdiv {
+        width: 100%;
+    }
+    
+    /* The slider itself */
     .slider {
-        height: auto;
-        width: 100px;
-    }
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 90%; /* Full-width */
+    height: 2px; /* Specified height */
+    background: #868686; /* Grey background */
+    outline: none; /* Remove outline */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    border-radius: 4px;
+    margin: 10px 0;
+  }
+  
+  /* Mouse-over effects */
+  .slider:hover {
+    
+  }
+  
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #ec6707; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 100%;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    background: #ec6707; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+    border-radius: 100%;
+  }
+  
     label {
         font-family: AntiqueOliveRoman;
         color: white;
@@ -147,18 +202,27 @@
         padding-left: 5px;
     }
     .testi {
-        width: max-content;
+        /* width: max-content;
         position: relative;
         display: inline-block;
         top: 1em;
-        padding-bottom: 1em;
+        padding-bottom: 1em; */
+        float: left;
+        width: 25%;
+        margin-top: 1em;
     }
     input[type=text] {
-        width: 20vw;
+        width: inherit;
         border-radius: 4px;
         border: 0;
-        top: -3px;
-        position: relative;
+        margin-right: 7px;
+        margin-bottom: 7px;
+        padding: 0 10px;
+    }
+    /* googlen kuvakkeet */
+    .material-icons {
+        vertical-align: middle;
+        margin-right: 4px;
     }
     @media print {
         .noprint {

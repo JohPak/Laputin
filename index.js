@@ -30,41 +30,6 @@ let kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/mi
 
 
 
-let haeSisalto = function() {
-// console.log("siirrytty haeSisaltoon");
-//HAETAAN SISÄLTÖ
-got(url).then(response => {
-        // console.log("siirrytty Gotiin");
-        const $ = cheerio.load(response.body);
-        // console.log($('a')[0]);
-        
-        // $('h1').each((i, tulos) => {
-            //     const sisalto = tulos;
-            //     console.log(sisalto);
-            //   });
-            
-            ean = $('div[itemprop="sku"]').text();
-            tuote = $('.base').text();
-            hinta = $('meta[itemprop="price"]').attr("content");
-            // kuvaus = $('.value p').text();
-            kuvaus = $('div.value:nth-child(1)').text();
-            kuva = "https://www.minimani.fi/media/catalog/product/" + ean.charAt(0) + "/" + ean.charAt(1) + "/" + ean + ".jpg";
-            
-            //korvataan hinnan piste pilkulla
-            hinta = hinta.replace(".", ",");
-            
-        }).catch(err => {
-            console.log(err, "Virhe sisällön noutamisessa: " + url);
-            tuote = "Virhe! Onko www-osoite oikein?";
-            kuvaus = "Tuotteen tietojen haku verkkokaupasta ei onnistunut. Onko www-osoite oikein? Toimiiko verkkosivut?";
-            kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
-            res.redirect("/");
-
-        });
-} // END HAESISALTO
-
-
-// hae html
 app.get('/', function (req, res, next) {
     if (url.includes("www.minimani.fi/")) {
         
@@ -98,8 +63,59 @@ app.get('/', function (req, res, next) {
 app.post('/hae', function (req, res, next) {
     url = req.body.urlinput;   
     console.log("Saatu url: " + url);
+    
+
+    let haeSisalto = function() {
+        // console.log("siirrytty haeSisaltoon");
+        //HAETAAN SISÄLTÖ
+        got(url).then(response => {
+                // console.log("siirrytty Gotiin");
+                const $ = cheerio.load(response.body);
+                // console.log($('a')[0]);
+                // console.log("ladataan cheerio");
+                
+                // $('h1').each((i, tulos) => {
+                    //     const sisalto = tulos;
+                    //     console.log(sisalto);
+                    //   });
+                    
+                    ean = $('div[itemprop="sku"]').text();
+                    tuote = $('.base').text();
+
+                    // haetaan hinta, muutetaan luvuksi, varmistetaan pari desimaalia
+                    hinta = $('meta[itemprop="price"]').attr("content");
+                    hinta = parseFloat(hinta);
+                    hinta = hinta.toFixed(2); //pidetään kaksi desimaalia
+                    //korvataan hinnan piste pilkulla
+                    hinta = hinta.toString();
+                    hinta = hinta.replace(".", ",");
+                    
+                    kuvaus = $('div.value:nth-child(1)').text();
+                    kuva = "https://www.minimani.fi/media/catalog/product/" + ean.charAt(0) + "/" + ean.charAt(1) + "/" + ean + ".jpg";
+                    
+        
+                    console.log(`haettu sisältö: ${ean}, ${tuote}, ${hinta}`);
+                    res.redirect("/");
+
+                    
+                }).catch(err => {
+                    console.log(err, "Virhe sisällön noutamisessa: " + url);
+                    tuote = "Virhe! Onko www-osoite oikein?";
+                    kuvaus = "Tuotteen tietojen haku verkkokaupasta ei onnistunut. Onko www-osoite oikein? Toimiiko verkkosivut?";
+                    kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
+                    res.redirect("/");
+                    
+        
+                });
+        } // END HAESISALTO
+
+
+        
     haeSisalto();
-    setTimeout(() => {  res.redirect("/"); }, 1000);
+
+
+
+    // setTimeout(() => {  res.redirect("/"); }, 1000);
     
 })
 

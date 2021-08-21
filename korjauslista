@@ -1,1 +1,5 @@
-Hinnat jotka tulee ilman viimeistä nollaa
+Url-kenttä mieluusti hakukentäksi
+
+• Hinnat jotka tulee ilman viimeistä nollaa
+• lisätty tarkistus jos ean.jpg -kuvaa ei löydy, niin lisää _1.jpg kuvan perään.
+• A4-laput halutaan tulostaa mustien reunojen kanssa

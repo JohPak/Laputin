@@ -4,7 +4,11 @@
 
 Käyttäjä kopioi tuotteen url-osoitteen verkkokaupasta, syöttää sen Hintalaputtimeen ja saa tulokseksi **tuotteen kuvalla varustetun hintalapun tulostettavaksi** A2/A4-koossa.
 
-| ![alt text](/img/edit.png "Hintalaputin muokkaustilassa") | ![alt text](/img/print.png "Tulostuksen esikatselu") |
+
+
+| Hintalaputin muokkaustilassa                                | Tulostuksen esikatselu                                  |
+| ----------------------------------------------------------- | ------------------------------------------------------- |
+| ![alt text](/img/edit.png "Hintalaputin muokkaustilassa")   | ![alt text](/img/print.png "Tulostuksen esikatselu") |
 
 Kaikkia hintalappuun tulevia **tekstejä on mahdollista muokata** klikkaamalla. **Kuvaa voi kääntää** käännä-painikkeella, ja sen **kokoa voi muuttaa** liukusäätimellä. **Esikatselun kokoa** voi suurentaa tai pienentää + ja - -painikkeilla. 
 Myös **tekstien sijaintia** ja **tuotetietojen kokoa** voi säätää liukusäätimillä.

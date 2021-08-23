@@ -1,4 +1,6 @@
 Url-kenttä mieluusti hakukentäksi
+lisää .tausta:n skaalaus js-tiedostoon
+lisäkuvien käyttö, voisi vaihtaa halutessaan pääkuvan tilalle
 
 • Hinnat jotka tulee ilman viimeistä nollaa
 • lisätty tarkistus jos ean.jpg -kuvaa ei löydy, niin lisää _1.jpg kuvan perään.

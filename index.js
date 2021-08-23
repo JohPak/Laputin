@@ -8,6 +8,7 @@ const http = require('http');
 const express = require('express');
 const port = 8080
 const path = require('path');
+const { contains, parseHTML } = require('cheerio/lib/static');
 
 let app = express();
 
@@ -27,6 +28,7 @@ let tuote = "tuote";
 let hinta = "hinta";
 let kuvaus = "kuvaus";
 let kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
+let lisakuva = "lisakuva";
 
 
 
@@ -92,8 +94,11 @@ app.post('/hae', function (req, res, next) {
                     
                     kuvaus = $('div.value:nth-child(1)').text();
                     kuva = "https://www.minimani.fi/media/catalog/product/" + ean.charAt(0) + "/" + ean.charAt(1) + "/" + ean + ".jpg";
-                    
         
+                    // lisäkuvia ei pysty hakemaan cheeriolla, koska cheerio ei näe scriptien luomia tageja
+                    // lisakuva = $('img').length;
+                    // console.log(lisakuva);
+
                     console.log(`haettu sisältö: ${ean}, ${tuote}, ${hinta}`);
                     res.redirect("/");
 

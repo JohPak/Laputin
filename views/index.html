@@ -25,12 +25,17 @@
                 <br>   
                     <button onclick="window.print()" title="Tulosta"><span class="material-icons">print</span>Tulosta</button>
                     
-                    <button onclick="tulostareunat()" title="Valitse tämä tulostaaksesi mustien kehysten kanssa"><span id="tulostareunatcheckbox" class="material-icons">check_box_outline_blank</span>Tulosta kehykset</button>
+                    <button onclick="tulostareunat()" title="Valitse tämä tulostaaksesi mustien kehysten kanssa" id="btn-tulostakehykset"><span id="tulostareunatcheckbox" class="material-icons">check_box_outline_blank</span>Tulosta kehykset</button>
                     
                     <button onclick="kaanna()" title="Käännä kuvaa"><span class="material-icons">rotate_right</span>Käännä</button>
                     
-                    <button onclick="suurennaesikatselua(1.05)" title="Suurenna esikatsekerroinvaa"><span class="material-icons">add</span></button>
-                    <button onclick="suurennaesikatselua(0.95)" title="Pienennä esikatsekerroinvaa"><span class="material-icons">remove</span></button>
+                    <!-- <fieldset class="fs-skaalaus">
+                        <legend>Esikatselu</legend>     -->
+                        <button onclick="skaalaaesikatselua(1.05)" title="Suurenna esikatselua"><span class="material-icons">add</span></button>
+                        <button onclick="skaalaaesikatselua(0.95)" title="Pienennä esikatselua"><span class="material-icons">remove</span></button>
+                    <!-- </fieldset> -->
+
+                    
                     
                     <div class="sliderdiv">
                         <div class="testi noprint">
@@ -62,7 +67,7 @@
         &nbsp;
     </div>
             
-    <div class="tausta" tabindex="-1">
+    <div class="tausta" tabindex="-1" title="Klikkaa tekstiä muokataksesi sitä">
         <div class="taustakuva noprint" tabindex="-1">
             <img src="/img/kehys.png" id="taustakuva">
         </div>
@@ -129,12 +134,56 @@
             window.addEventListener("load", event => {
             var image = document.querySelector('#kuvakoko');
             var isLoaded = image.complete && image.naturalHeight !== 0;
-                if(!isLoaded) {
-                    image = image.src.replace(".jpg", "_1.jpg");
-                    document.querySelector('#kuvakoko').src = image;
-                    console.log("Alkuperäistä kuvaa ei löytynyt. Lisätään urlin perään '_1.jpg'");
-                };
+
+            let apuri;
+            for (let index = 2; index < 10; index++) {
+                apuri = image.src.replace(".jpg", `_${index}.jpg`);
+                
+                // console.log(apuri);
+                
+                let lisakuva = document.createElement("IMG");
+                lisakuva.setAttribute("src", `${apuri}`)
+                // lisakuva.setAttribute("width", `100`)
+                lisakuva.setAttribute("class", `lisakuva`)
+                
+                lisakuva.addEventListener("load", function(){
+                    // alert(lisakuva.src + " " + this.naturalWidth +' '+ this.naturalHeight );
+                    // Mikäli lisäkuvalla on olemassa korkeusarvo, lisätään kuva dom:iin
+                    if (lisakuva.naturalHeight) {
+                        // alert(lisakuva.naturalHeight);
+                        // document.body.appendChild(lisakuva);
+                        
+                        //mitä, mihin EI TOIMI
+                        document.body.append(lisakuva, getElementsByClassName('tausta'));
+                    }                   
+                });
+
+
+//                 var x = document.createElement("IMG");
+//   x.setAttribute("src", "img_pulpit.jpg");
+//   x.setAttribute("width", "304");
+//   x.setAttribute("height", "228");
+//   x.setAttribute("alt", "The Pulpit Rock");
+//   document.body.appendChild(x);
+            }
+
+            
+            if(!isLoaded) {
+                image = image.src.replace(".jpg", "_1.jpg");
+                document.querySelector('#kuvakoko').src = image;
+                console.log("Alkuperäistä kuvaa ei löytynyt. Lisätään urlin perään '_1.jpg'");
+            };
+            
+            // Jos kuva _1.jpg ei toimi, vaihdetaan sen tilalle placeholder
+            if(!isLoaded) {
+                // jos ei toimi, korvataan se placeholderilla
+                image = image.src = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
+                document.querySelector('#kuvakoko').src = image;
+                console.log("Palautetaan placeholder-kuva.");
+            };
             });
+
+            
 
 
             // tarkistetaan onko "tulosta kehykset" valittuna
@@ -151,8 +200,9 @@
                 }
             }
 
+            // skaalataan esikatselukuvaa
             let skaalaus = 78;
-            suurennaesikatselua = function(kerroin) {
+            skaalaaesikatselua = function(kerroin) {
                 kerroin = parseFloat(kerroin);
                 console.log("Kerroin ", kerroin + " * " + skaalaus + " = " + skaalaus*kerroin);
                 skaalaus = skaalaus * kerroin;

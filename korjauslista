@@ -1,3 +1,5 @@
+vaihda menubarin korkeudeksi muuttuja-arvo. Alla majailevan spacerin kooksi sitten arvo + 20px
+_1 -kuvakorjaus ei toimi oikein (laittaa placeholderin vaikka kuvalla olis _1.jpg -kuva olemas)
 Url-kenttä mieluusti hakukentäksi
 lisää .tausta:n skaalaus js-tiedostoon
 lisäkuvien käyttö, voisi vaihtaa halutessaan pääkuvan tilalle

@@ -100,6 +100,7 @@ app.post('/hae', function (req, res, next) {
                     // console.log(lisakuva);
 
                     console.log(`haettu sisältö: ${ean}, ${tuote}, ${hinta}`);
+                    console.log("---------------------------------------------");
                     res.redirect("/");
 
                     

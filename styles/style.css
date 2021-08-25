@@ -103,6 +103,11 @@
         height: var(--korkeus);
         width: var(--leveys);
     }
+    /* kun .sivua hoveroi, .tekstien taustaväri vaihtuu */
+    /* https://stackoverflow.com/questions/4502633/how-to-affect-other-elements-when-one-element-is-hovered */
+    /* .sivu:hover .tekstit {
+        background-color:rgb(255, 248, 174, 0.5);
+    } */
     #taustakuva {
         height: 100vh;
         position: relative;
@@ -159,11 +164,17 @@
         border-radius: 4px;
     }
     button:hover {
-        background-color: #ff832b;
+        background-color: #d25800;
         color: white;
     }
-    #btn-tulostakehykset {
+    .btn-harmaa {
         background-color: #868686;
+    }
+    .btn-harmaa:hover {
+        background-color: #6e6e6e;
+    }
+    .btn-oikea {
+        float: right;
     }
     legend {
         background-color: gray;
@@ -243,7 +254,7 @@
         padding: 0 10px;
     }
     /* googlen kuvakkeet */
-    .material-icons {
+    .material-icons, .material-icons-outlined {
         vertical-align: middle;
         margin-right: 4px;
     }
@@ -270,6 +281,9 @@
             height: 100% !important;
             /* pakottaa tulostamaan vain yhden sivun */
             position: fixed !important;
+        }
+        body {
+            background-image: none;
         }
 
         

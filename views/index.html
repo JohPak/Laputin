@@ -6,36 +6,50 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Hintalaputin - Lantahiputin</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
         <link href="/styles/style.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="/img/favicon.png" sizes="32x32">
   
       
     </head>
     <body>
     
+        <script>
+            let d = new Date();
+            let year = d.getFullYear();
+        </script>
+
         <div class="menubar noprint">
 
             <fieldset class="noprint">
                 <form action="/hae" method="post" class="noprint">
                     <input type="text" class="noprint" name="urlinput" value="{url}" onclick="this.select()" title="Syötä tuotteen www-osoite ja paina Hae">
-                    <button type="submit" title="Syötä tuotteen www-osoite ja paina Hae" class="noprint" style="width: 100px;">
-                        <span class="material-icons">search</span>Hae
+                    <button type="submit" title="Syötä tuotteen www-osoite (Minimanin verkkokaupasta) ja paina Nouda tiedot" class="noprint" style="width: 130px;">
+                        <span class="material-icons-outlined">arrow_downward</span>Nouda tiedot
                     </button>
                 </form> 
                 
                 <br>   
-                    <button onclick="window.print()" title="Tulosta"><span class="material-icons">print</span>Tulosta</button>
-                    
-                    <button onclick="tulostareunat()" title="Valitse tämä tulostaaksesi mustien kehysten kanssa" id="btn-tulostakehykset"><span id="tulostareunatcheckbox" class="material-icons">check_box_outline_blank</span>Tulosta kehykset</button>
-                    
-                    <button onclick="kaanna()" title="Käännä kuvaa"><span class="material-icons">rotate_right</span>Käännä</button>
-                    
-                    <!-- <fieldset class="fs-skaalaus">
-                        <legend>Esikatselu</legend>     -->
-                        <button onclick="skaalaaesikatselua(1.05)" title="Suurenna esikatselua"><span class="material-icons">add</span></button>
-                        <button onclick="skaalaaesikatselua(0.95)" title="Pienennä esikatselua"><span class="material-icons">remove</span></button>
+                <!-- PAINIKERIVI -->
+                <!-- ************************************************** -->
+                <button onclick="window.print()" title="Tulosta"><span class="material-icons">print</span>Tulosta</button>
+                
+                <button onclick="tulostareunat()" title="Valitse tämä tulostaaksesi mustien kehysten kanssa" class="btn-harmaa"><span id="tulostareunatcheckbox" class="material-icons">check_box_outline_blank</span>Tulosta kehykset</button>
+                
+                <button onclick="kaanna()" title="Käännä kuvaa"><span class="material-icons">rotate_right</span>Käännä</button>
+                
+                <!-- <fieldset class="fs-skaalaus">
+                    <legend>Esikatselu</legend>     -->
+                    <button onclick="skaalaaesikatselua(1.05)" title="Suurenna esikatselua"><span class="material-icons">add</span></button>
+                    <button onclick="skaalaaesikatselua(0.95)" title="Pienennä esikatselua"><span class="material-icons">remove</span></button>
                     <!-- </fieldset> -->
-
                     
+                    <button onclick="kuvanurl()" title="Muokkaa kuvan url-osoitetta" class="btn-harmaa"><span class="material-icons">link</span>Kuvan URL</button>
+                    
+                    <button onclick="alert(`© Johanna Pakkala ${year} \n\n Ongelmatilanteissa, kysymyksissä tai kehitysehdotuksissa ota yhteyttä johanna.pakkala@minimani.fi`)" title="Info" class="btn-harmaa btn-oikea"><span class="material-icons-outlined">info</span>Info</button>
+                    
+                    <!-- SLIDERIT  -->
+                    <!-- ************************************************** -->
                     
                     <div class="sliderdiv">
                         <div class="testi noprint">
@@ -68,10 +82,13 @@
     </div>
             
     <div class="tausta" tabindex="-1" title="Klikkaa tekstiä muokataksesi sitä">
-        <div class="taustakuva noprint" tabindex="-1">
+        <!-- <div class="taustakuva noprint" tabindex="-1"> -->
+        <div class="taustakuva noprint">
             <img src="/img/kehys.png" id="taustakuva">
         </div>
-        <div class="sivu" tabindex="-1">
+        <!-- <div class="sivu" tabindex="-1"> -->
+        <div class="sivu">
+            <!-- <div class="kuva" tabindex="-1"> -->
             <div class="kuva" tabindex="-1">
                 <img src="https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" id="kuvakoko">
 
@@ -135,52 +152,48 @@
             var image = document.querySelector('#kuvakoko');
             var isLoaded = image.complete && image.naturalHeight !== 0;
 
-            let apuri;
-            for (let index = 2; index < 10; index++) {
-                apuri = image.src.replace(".jpg", `_${index}.jpg`);
+            // let apuri;
+            // for (let index = 2; index < 10; index++) {
+            //     apuri = image.src.replace(".jpg", `_${index}.jpg`);
                 
-                // console.log(apuri);
+            //     // console.log(apuri);
                 
-                let lisakuva = document.createElement("IMG");
-                lisakuva.setAttribute("src", `${apuri}`)
-                // lisakuva.setAttribute("width", `100`)
-                lisakuva.setAttribute("class", `lisakuva`)
+            //     let lisakuva = document.createElement("IMG");
+            //     lisakuva.setAttribute("src", `${apuri}`)
+            //     // lisakuva.setAttribute("width", `100`)
+            //     lisakuva.setAttribute("class", `lisakuva`)
                 
-                lisakuva.addEventListener("load", function(){
-                    // alert(lisakuva.src + " " + this.naturalWidth +' '+ this.naturalHeight );
-                    // Mikäli lisäkuvalla on olemassa korkeusarvo, lisätään kuva dom:iin
-                    if (lisakuva.naturalHeight) {
-                        // alert(lisakuva.naturalHeight);
-                        // document.body.appendChild(lisakuva);
+            //     lisakuva.addEventListener("load", function(){
+            //         // alert(lisakuva.src + " " + this.naturalWidth +' '+ this.naturalHeight );
+            //         // Mikäli lisäkuvalla on olemassa korkeusarvo, lisätään kuva dom:iin
+            //         if (lisakuva.naturalHeight) {
+            //             // alert(lisakuva.naturalHeight);
+            //             // document.body.appendChild(lisakuva);
                         
-                        //mitä, mihin EI TOIMI
-                        document.body.append(lisakuva, getElementsByClassName('tausta'));
-                    }                   
-                });
+            //             //mitä, mihin EI TOIMI
+            //             document.body.append(lisakuva, getElementsByClassName('tausta'));
+            //         }                   
+            //     });
 
-
-//                 var x = document.createElement("IMG");
-//   x.setAttribute("src", "img_pulpit.jpg");
-//   x.setAttribute("width", "304");
-//   x.setAttribute("height", "228");
-//   x.setAttribute("alt", "The Pulpit Rock");
-//   document.body.appendChild(x);
-            }
+            // }
 
             
-            if(!isLoaded) {
-                image = image.src.replace(".jpg", "_1.jpg");
-                document.querySelector('#kuvakoko').src = image;
-                console.log("Alkuperäistä kuvaa ei löytynyt. Lisätään urlin perään '_1.jpg'");
-            };
+                if(!isLoaded) {
+                    console.log(`Alkuperäistä kuvaa ${image.src} ei löytynyt.'`);
+                    image.src = image.src.replace(".jpg", "_1.jpg");
+                    document.querySelector('#kuvakoko').src = image.src;
+                    console.log(`Lisätään urlin perään '_1.jpg ja yritetään ladata: ${image.src}`);
+                }
+                // EI TOIMI
+                // if(image.src.includes("_1.jpg") && !isLoaded) {
+                //     // Jos kuva _1.jpg ei toimi, vaihdetaan sen tilalle placeholder
+                //     // jos ei toimi, korvataan se placeholderilla
+                //     image.src = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
+                //     document.querySelector('#kuvakoko').src = image.src;
+                //     console.log("Palautetaan placeholder-kuva.");
+                // }
+               
             
-            // Jos kuva _1.jpg ei toimi, vaihdetaan sen tilalle placeholder
-            if(!isLoaded) {
-                // jos ei toimi, korvataan se placeholderilla
-                image = image.src = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
-                document.querySelector('#kuvakoko').src = image;
-                console.log("Palautetaan placeholder-kuva.");
-            };
             });
 
             
@@ -209,8 +222,16 @@
                 document.querySelector('.tausta').style.transform = `scale(${skaalaus}%)`;
             }
 
+            kuvanurl = function() {
+                console.log("tultiin funktioon");
+                let url = window.prompt("Vaihtaaksesi toisen kuvan (png tai jpg), anna sen url-osoite: ", document.querySelector('#kuvakoko').src);
 
-                
+                // prompt OK palauttaa syötetyn arvon, CANCEL palauttaa null:in
+                if (url !== null && url.includes("jpg") || url.includes("png")) {
+                    document.querySelector('#kuvakoko').src = url;
+                }
+
+            }
 
             </script>
 

@@ -93,10 +93,16 @@
     .hinta {
         font-family: AntiqueOliveBlack;
         font-size: 8vh;
+        display: inline-flex;
     }
     .sulkuhinta {
         font-family: AntiqueOliveBlack;
-        font-size: 4vh;
+        font-size: 3vh;
+        margin-left: 1vw;
+        margin-top: 0.8vh;
+    }
+    .sulkuhinta:hover {
+        background-color: pink;
     }
     .sivu {
         background-color: white;

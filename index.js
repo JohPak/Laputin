@@ -26,7 +26,7 @@ let url= "https://www.minimani.fi/vallila-verhokappa-harmonia-green-rust-60x250-
 let ean = "ean-koodi";
 let tuote = "tuote";
 let hinta = "hinta";
-let sulkuhinta = "(sulkuhinta)";
+let sulkuhinta = "";
 let kuvaus = "kuvaus";
 let kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
 let lisakuva = "lisakuva";
@@ -46,7 +46,12 @@ app.get('/', function (req, res, next) {
         html = html.replace("Lantahiputin", tuote);
         html = html.replace("{ean}", ean);
         html = html.replace("{hinta}", hinta + " €");
-        html = html.replace("{sulkuhinta}", sulkuhinta);
+        if (sulkuhinta != "") {
+            html = html.replace("{sulkuhinta}", "(" + sulkuhinta +")");
+        }
+        else {
+            html = html.replace("{sulkuhinta}", "&nbsp;");
+        }
         html = html.replace("{kuvaus}", kuvaus);
         html = html.replace("{url}", url);
         
@@ -60,7 +65,7 @@ app.get('/', function (req, res, next) {
         html = html.replace("{tuote}", "tuote");
         html = html.replace("{ean}", "ean");
         html = html.replace("{hinta}", "hinta" + " €");
-        html = html.replace("{sulkuhinta}", "(sulkuhinta");
+        html = html.replace("{sulkuhinta}", "sulkuhinta");
         html = html.replace("{kuvaus}", "tuotetiedot");
         res.send(html);
     }
@@ -93,12 +98,32 @@ app.post('/hae', function (req, res, next) {
                     hinta = parseFloat(hinta);
                     hinta = hinta.toFixed(2); //pidetään kaksi desimaalia
                     //korvataan hinnan piste pilkulla
-                    hinta = hinta.toString();
-                    hinta = hinta.replace(".", ",");
-
+                    
                     // haetaan sulkuhinta, jos sellainen on
-                    sulkuhinta = "(" + $('#product-attribute-specs-table > tbody > tr:nth-child(2) > td > span').text() + ")";
+                    sulkuhinta = $('#product-attribute-specs-table > tbody > tr:nth-child(2) > td > span').text();
+                    sulkuhinta = sulkuhinta.replace(",", ".");
+                    sulkuhinta = parseFloat(sulkuhinta);
                     // console.log(sulkuhinta);
+                    
+                    hinta = parseFloat(hinta);
+                    
+                    if (sulkuhinta === hinta) {
+                        console.log("ei alennusta, myyntihinta on sama kuin sulkuhinta");
+                        sulkuhinta = "";
+                        hinta = hinta.toFixed(2);
+                        hinta = hinta.toString();
+                        hinta = hinta.replace(".", ",");
+                    }
+                    else {
+                        console.log("sulkuhinta eri kuin myyntihinta");
+                        hinta = hinta.toFixed(2);
+                        hinta = hinta.toString();
+                        hinta = hinta.replace(".", ",");
+                        sulkuhinta = sulkuhinta.toFixed(2);
+                        sulkuhinta = sulkuhinta.toString();
+                        sulkuhinta = sulkuhinta.replace(".", ",");
+                        sulkuhinta = sulkuhinta + " €";
+                    }
                     
                     kuvaus = $('div.value:nth-child(1)').text();
                     kuva = "https://www.minimani.fi/media/catalog/product/" + ean.charAt(0) + "/" + ean.charAt(1) + "/" + ean + ".jpg";

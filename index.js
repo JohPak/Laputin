@@ -26,6 +26,7 @@ let url= "https://www.minimani.fi/vallila-verhokappa-harmonia-green-rust-60x250-
 let ean = "ean-koodi";
 let tuote = "tuote";
 let hinta = "hinta";
+let sulkuhinta = "(sulkuhinta)";
 let kuvaus = "kuvaus";
 let kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
 let lisakuva = "lisakuva";
@@ -39,11 +40,13 @@ app.get('/', function (req, res, next) {
         // nodessa ei voi käpistellä html-tiedostoja suoraan, joten muutetaan se stringiksi
         let html = fs.readFileSync("./views/index.html").toString("utf-8");
         
+        // aaltosulkeissa olevat ovat ns. placeholdereita jotka on kirjoitettu html:n puolelle. Tässä ne korvataan muuttujien sisällöllä.
         html = html.replace("https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png", kuva);
         html = html.replace("{tuote}", tuote);
         html = html.replace("Lantahiputin", tuote);
         html = html.replace("{ean}", ean);
         html = html.replace("{hinta}", hinta + " €");
+        html = html.replace("{sulkuhinta}", sulkuhinta);
         html = html.replace("{kuvaus}", kuvaus);
         html = html.replace("{url}", url);
         
@@ -57,6 +60,7 @@ app.get('/', function (req, res, next) {
         html = html.replace("{tuote}", "tuote");
         html = html.replace("{ean}", "ean");
         html = html.replace("{hinta}", "hinta" + " €");
+        html = html.replace("{sulkuhinta}", "(sulkuhinta");
         html = html.replace("{kuvaus}", "tuotetiedot");
         res.send(html);
     }
@@ -91,6 +95,10 @@ app.post('/hae', function (req, res, next) {
                     //korvataan hinnan piste pilkulla
                     hinta = hinta.toString();
                     hinta = hinta.replace(".", ",");
+
+                    // haetaan sulkuhinta, jos sellainen on
+                    sulkuhinta = "(" + $('#product-attribute-specs-table > tbody > tr:nth-child(2) > td > span').text() + ")";
+                    // console.log(sulkuhinta);
                     
                     kuvaus = $('div.value:nth-child(1)').text();
                     kuva = "https://www.minimani.fi/media/catalog/product/" + ean.charAt(0) + "/" + ean.charAt(1) + "/" + ean + ".jpg";
@@ -106,7 +114,7 @@ app.post('/hae', function (req, res, next) {
                     
                 }).catch(err => {
                     console.log(err, "Virhe sisällön noutamisessa: " + url);
-                    tuote = "Virhe! Onko www-osoite oikein?";
+                    tuote = "Onko www-osoite oikein?";
                     kuvaus = "Tuotteen tietojen haku verkkokaupasta ei onnistunut. Onko www-osoite oikein? Toimiiko verkkosivut?";
                     kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
                     res.redirect("/");

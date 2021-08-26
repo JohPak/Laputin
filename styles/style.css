@@ -94,6 +94,10 @@
         font-family: AntiqueOliveBlack;
         font-size: 8vh;
     }
+    .sulkuhinta {
+        font-family: AntiqueOliveBlack;
+        font-size: 4vh;
+    }
     .sivu {
         background-color: white;
         position: absolute;
@@ -164,14 +168,11 @@
         border-radius: 4px;
     }
     button:hover {
-        background-color: #d25800;
+        filter: brightness(0.85);
         color: white;
     }
     .btn-harmaa {
         background-color: #868686;
-    }
-    .btn-harmaa:hover {
-        background-color: #6e6e6e;
     }
     .btn-oikea {
         float: right;

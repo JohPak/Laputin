@@ -38,15 +38,16 @@
                 
                 <button onclick="kaanna()" title="Käännä kuvaa"><span class="material-icons">rotate_right</span>Käännä</button>
                 
+                
+                <button onclick="kuvanurl()" title="Muokkaa kuvan url-osoitetta" class="btn-harmaa"><span class="material-icons">link</span>Kuvan URL</button>
+                
                 <!-- <fieldset class="fs-skaalaus">
                     <legend>Esikatselu</legend>     -->
                     <button onclick="skaalaaesikatselua(1.05)" title="Suurenna esikatselua"><span class="material-icons">add</span></button>
                     <button onclick="skaalaaesikatselua(0.95)" title="Pienennä esikatselua"><span class="material-icons">remove</span></button>
                     <!-- </fieldset> -->
                     
-                    <button onclick="kuvanurl()" title="Muokkaa kuvan url-osoitetta" class="btn-harmaa"><span class="material-icons">link</span>Kuvan URL</button>
-                    
-                    <button onclick="alert(`© Johanna Pakkala ${year} \n\n Ongelmatilanteissa, kysymyksissä tai kehitysehdotuksissa ota yhteyttä johanna.pakkala@minimani.fi`)" title="Info" class="btn-harmaa btn-oikea"><span class="material-icons-outlined">info</span>Info</button>
+                <button onclick="alert(`© Johanna Pakkala ${year} \n\n Ongelmatilanteissa, kysymyksissä tai kehitysehdotuksissa ota yhteyttä johanna.pakkala@minimani.fi`)" title="Info" class="btn-harmaa btn-oikea"><span class="material-icons-outlined">info</span>Info</button>
                     
                     <!-- SLIDERIT  -->
                     <!-- ************************************************** -->
@@ -95,6 +96,7 @@
             </div>
             <div class="tuote tekstit" contenteditable="true" tabindex="1" style="margin-top: 0vh;" title="Klikkaa muokataksesi tekstiä">{tuote}</div>
             <div class="ean tekstit" contenteditable="true" tabindex="2" title="Klikkaa muokataksesi tekstiä">{ean}</div>
+            <div class="sulkuhinta tekstit" contenteditable="true" tabindex="3" title="Klikkaa muokataksesi tekstiä">{sulkuhinta}</div>
             <div class="hinta tekstit" contenteditable="true" tabindex="3" title="Klikkaa muokataksesi tekstiä">{hinta}</div>
             <div class="kuvaus tekstit" contenteditable="true" tabindex="4" title="Klikkaa muokataksesi tekstiä">{kuvaus}</div>
             </div>

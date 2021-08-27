@@ -10,10 +10,18 @@ Käyttäjä kopioi tuotteen url-osoitteen verkkokaupasta, syöttää sen Hintala
 | ----------------------------------------------------------- | ------------------------------------------------------- |
 | ![alt text](/img/edit.png "Hintalaputin muokkaustilassa")   | ![alt text](/img/print.png "Tulostuksen esikatselu") |
 
-Kaikkia hintalappuun tulevia **tekstejä on mahdollista muokata** klikkaamalla. **Kuvaa voi kääntää** käännä-painikkeella, ja sen **kokoa voi muuttaa** liukusäätimellä. **Esikatselun kokoa** voi suurentaa tai pienentää + ja - -painikkeilla. 
-Myös **tekstien sijaintia** ja **tuotetietojen kokoa** voi säätää liukusäätimillä.
+## Ominaisuuksia
 
-Käyttäjä voi valita haluaako tulostaa hintalapun mustalla kehyksellä vai ilman kehystä (oletus).
+• Hintalapun tekstit ovat muokattavissa klikkaamalla
+• Tuotekuvaa voi kääntää 90° välein
+• Tuotekuvan kokoa voi säätää liukusäätimellä
+• Tuotekuvan sijaintia pystysuunnassa voi säätää liukusäätimellä
+• Tuotekuva on mahdollista vaihtaa toiseksi png- tai jpg-kuvaksi. "Kuvan url"-painike avaa syöttölaatikon, johon voi liittää tai kirjoittaa toisen url-osoitteen.
+• Tekstien sijaintia pystysuunnassa suhteessa kuvaan voi säätää liukusäätimellä
+• Tuotetietojen kirjasinkokoa voi säätää liukusäätimellä
+
+• Esikatselun kokoa voi muuttaa - ja +-painikkeilla. Koon muutos ei vaikuta tulostuskokoon.
+• Käyttäjä voi valita haluaako mustan kehyksen tulostukseen mukaan rastimalla "tulosta kehykset".
 
 ## Miten se toimii?
 

@@ -46,7 +46,7 @@ app.get('/', function (req, res, next) {
         html = html.replace("Lantahiputin", tuote);
         html = html.replace("{ean}", ean);
         html = html.replace("{hinta}", hinta + " €");
-        if (sulkuhinta != "" && sulkuhinta != "NaN") {
+        if (sulkuhinta != "" && sulkuhinta != NaN) {
             html = html.replace("{sulkuhinta}", "(" + sulkuhinta +")");
         }
         else {
@@ -95,15 +95,29 @@ app.post('/hae', function (req, res, next) {
 
                     // haetaan hinta, muutetaan luvuksi, varmistetaan pari desimaalia
                     hinta = $('meta[itemprop="price"]').attr("content");
-                    hinta = parseFloat(hinta);
-                    hinta = hinta.toFixed(2); //pidetään kaksi desimaalia
-                    //korvataan hinnan piste pilkulla
+                    if (hinta != undefined) {
+                        hinta = parseFloat(hinta);
+                        hinta = hinta.toFixed(2); //pidetään kaksi desimaalia                  
+                    }
+                    else {
+                        // Jos tuotteella on alennushinta, itemprop="price":a ei oo olemassa. Joten:
+                        // <span id="product-price-105505" data-price-amount="16.95" data-price-type="finalPrice" class="price-wrapper "><span class="price">16,95&nbsp;€</span></span>
+
+                        hinta = $('span[data-price-type="finalPrice"]').attr("data-price-amount");
+                        console.log(hinta);
+                    }
                     
-                    // haetaan sulkuhinta, jos sellainen on
-                    sulkuhinta = $('#product-attribute-specs-table > tbody > tr:nth-child(2) > td > span').text();
-                    sulkuhinta = sulkuhinta.replace(",", ".");
-                    sulkuhinta = parseFloat(sulkuhinta);
-                    // console.log(sulkuhinta);
+                    // haetaan sulkuhinta
+                    sulkuhinta = $('span[data-price-type="oldPrice"]').attr("data-price-amount")
+                    
+                    if (sulkuhinta != NaN && sulkuhinta != undefined) {
+                        sulkuhinta = sulkuhinta.replace(",", ".");
+                        sulkuhinta = parseFloat(sulkuhinta);
+                        // console.log(sulkuhinta);
+                    }
+                    else {
+                        sulkuhinta = "";
+                    }
                     
                     hinta = parseFloat(hinta);
                     
@@ -114,8 +128,8 @@ app.post('/hae', function (req, res, next) {
                         hinta = hinta.toString();
                         hinta = hinta.replace(".", ",");
                     }
-                    else {
-                        console.log("sulkuhinta eri kuin myyntihinta");
+                    else if (sulkuhinta != undefined && sulkuhinta != NaN && sulkuhinta != "") {
+                        console.log("sulkuhinta (" + sulkuhinta + ") eri kuin myyntihinta (" + hinta + ")");
                         hinta = hinta.toFixed(2);
                         hinta = hinta.toString();
                         hinta = hinta.replace(".", ",");
@@ -123,6 +137,9 @@ app.post('/hae', function (req, res, next) {
                         sulkuhinta = sulkuhinta.toString();
                         sulkuhinta = sulkuhinta.replace(".", ",");
                         sulkuhinta = sulkuhinta + " €";
+                    }
+                    else {
+                        sulkuhinta = "";
                     }
                     
                     kuvaus = $('div.value:nth-child(1)').text();
@@ -139,8 +156,9 @@ app.post('/hae', function (req, res, next) {
                     
                 }).catch(err => {
                     console.log(err, "Virhe sisällön noutamisessa: " + url);
-                    tuote = "Onko www-osoite oikein?";
+                    tuote = "Auts, nyrjähdin :.(";
                     kuvaus = "Tuotteen tietojen haku verkkokaupasta ei onnistunut. Onko www-osoite oikein? Toimiiko verkkosivut?";
+                    hinta = "";
                     kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
                     res.redirect("/");
                     

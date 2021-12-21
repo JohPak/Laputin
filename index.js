@@ -139,6 +139,9 @@ app.post('/hae', function (req, res, next) {
                         sulkuhinta = sulkuhinta + " €";
                     }
                     else {
+                        hinta = hinta.toFixed(2);
+                        hinta = hinta.toString();
+                        hinta = hinta.replace(".", ",");
                         sulkuhinta = "";
                     }
                     

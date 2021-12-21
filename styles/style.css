@@ -124,7 +124,7 @@
         z-index: 999;
     }
     .tekstit {
-        padding: 0 7vh;
+        padding: 0 11vh; /*oli 9vh*/
         position:relative;
         z-index: 9999999;
     }

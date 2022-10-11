@@ -22,11 +22,11 @@ app.use(express.json()) // To parse the incoming requests with JSON payloads
 // app.use(express.static('public')) 
 app.use(express.static(__dirname)); //NODEN käynnistyssijainti - saattaa muuttua jos appin siirtää jonnekin
 
-let url= "https://www.minimani.fi/vallila-verhokappa-harmonia-green-rust-60x250-cm.html";
+let url= "https://www.minimani.fi/living-peili-pyorea-60cm-kehyksella.html";
 let ean = "ean-koodi";
 let tuote = "tuote";
 let hinta = "hinta";
-let sulkuhinta = "";
+let sulkuhinta = "x,xx €";
 let kuvaus = "kuvaus";
 let kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
 let lisakuva = "lisakuva";
@@ -86,11 +86,15 @@ app.post('/hae', function (req, res, next) {
                 // console.log("ladataan cheerio");
                 
                 // $('h1').each((i, tulos) => {
-                    //     const sisalto = tulos;
-                    //     console.log(sisalto);
-                    //   });
+                //         const sisalto = tulos;
+                //         console.log(sisalto);
+                //       });
                     
-                    ean = $('div[itemprop="sku"]').text();
+                    // ean = $('div[itemprop="sku"]').text(); LAKKASI toimimasta 10/2022
+                    ean = $('div[class="text-gray-light4"]').text(); // toimii 11.10.2022
+                    // siivotaan kaikki ei-numeeriset merkit
+                    ean = ean.replace(/\D/g,'');
+
                     tuote = $('.base').text();
 
                     // haetaan hinta, muutetaan luvuksi, varmistetaan pari desimaalia
@@ -145,8 +149,11 @@ app.post('/hae', function (req, res, next) {
                         sulkuhinta = "";
                     }
                     
-                    kuvaus = $('div.value:nth-child(1)').text();
+                    // kuvaus = $('div.value:nth-child(1)').text(); LAKKASI toimimasta 10/2022
+                    kuvaus = $('div[class="prose"]').text(); // toimii 11.10.2022
+                    
                     kuva = "https://www.minimani.fi/media/catalog/product/" + ean.charAt(0) + "/" + ean.charAt(1) + "/" + ean + ".jpg";
+                    
         
                     // lisäkuvia ei pysty hakemaan cheeriolla, koska cheerio ei näe scriptien luomia tageja
                     // lisakuva = $('img').length;

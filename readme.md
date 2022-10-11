@@ -25,3 +25,7 @@ Käyttäjä kopioi tuotteen url-osoitteen verkkokaupasta, syöttää sen Hintala
 ## Miten se toimii?
 
 Hintalaputin toimii [verkkoharavoinnilla](https://en.wikipedia.org/wiki/Web_scraping), käyttäen [cheerio](https://www.npmjs.com/package/cheerio)ta. Se poimii **julkisella verkkosivulla näkyviä tietoja**, kuten tuotteen nimen, tiedot ja hinnan. Nämä saadut tiedot asetellaan mieleisesti, tässä tapauksessa hintalappuun sopivaksi kokonaisuudeksi tulostamista varten.
+
+## Missä se toimii?
+
+Hintalaputin on muuttanut [Cyclic:iin](https://laputin.cyclic.app/) Herokun lopettaessa ilmaisen alustan tarjoamisen 11/2022.

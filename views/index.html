@@ -47,7 +47,7 @@
                     <button onclick="skaalaaesikatselua(0.95)" title="Pienennä esikatselua"><span class="material-icons">remove</span></button>
                     <!-- </fieldset> -->
                     
-                <button onclick="alert(`© Johanna Pakkala ${year} (päivitetty 21.12.2021) \n\n Ongelmatilanteissa, kysymyksissä tai kehitysehdotuksissa ota yhteyttä johanna.pakkala84@gmail.com`)" title="Info" class="btn-harmaa btn-oikea"><span class="material-icons-outlined">info</span>Info</button>
+                <button onclick="alert(`© Johanna Pakkala ${year} (päivitetty 11.10.2022) \n\n Ongelmatilanteissa, kysymyksissä tai kehitysehdotuksissa ota yhteyttä johanna.pakkala@minimani.fi`)" title="Info" class="btn-harmaa btn-oikea"><span class="material-icons-outlined">info</span>Info</button>
                     
                     <!-- SLIDERIT  -->
                     <!-- ************************************************** -->
@@ -223,6 +223,8 @@
                 console.log("Kerroin ", kerroin + " * " + skaalaus + " = " + skaalaus*kerroin);
                 skaalaus = skaalaus * kerroin;
                 document.querySelector('.tausta').style.transform = `scale(${skaalaus}%)`;
+                // -webkit-transform:scale(0.9, 0.9); Sarafissa toimis tämä?
+
             }
 
             kuvanurl = function() {

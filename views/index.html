@@ -7,6 +7,7 @@
         <title>Hintalaputin - Lantahiputin</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+EAN13+Text&display=swap" rel="stylesheet">
         <link href="/styles/style.css" rel="stylesheet">
         <link rel="icon" type="image/png" href="/img/favicon.png" sizes="32x32">
   
@@ -35,6 +36,8 @@
                 <button onclick="window.print()" title="Tulosta"><span class="material-icons">print</span>Tulosta</button>
                 
                 <button onclick="tulostareunat()" title="Valitse tämä tulostaaksesi mustien kehysten kanssa" class="btn-harmaa"><span id="tulostareunatcheckbox" class="material-icons">check_box_outline_blank</span>Tulosta kehykset</button>
+                
+                <button onclick="naytaviivakoodi()" title="Näytä ean viivakoodina" class="btn-harmaa"><span id="naytaviivakoodicheckbox" class="material-icons">check_box_outline_blank</span>Näytä viivakoodi</button>
                 
                 <button onclick="kaanna()" title="Käännä kuvaa"><span class="material-icons">rotate_right</span>Käännä</button>
                 
@@ -99,9 +102,10 @@
             <div class="hinta tekstit" contenteditable="true" tabindex="3" title="Klikkaa muokataksesi hintaa">{hinta}
                 <div class="sulkuhinta" contenteditable="true" tabindex="3" title="Klikkaa muokataksesi sulkuhintaa">{sulkuhinta}</div>
             </div>
-            <div class="kuvaus tekstit" contenteditable="true" tabindex="4" title="Klikkaa muokataksesi tekstiä">{kuvaus}</div>
+            <div class="kuvaus tekstit" contenteditable="true" tabindex="5" title="Klikkaa muokataksesi tekstiä">{kuvaus}</div>
+            <div class="viivakoodi tekstit" contenteditable="true" tabindex="4" title="Klikkaa muokataksesi ean-koodia">{viivakoodi}</div>
             </div>
-        </div>
+        </div> 
 
 
         <script>
@@ -213,6 +217,20 @@
                     document.querySelector('.taustakuva').classList.add('noprint');
                     document.querySelector('#tulostareunatcheckbox').innerHTML = "check_box_outline_blank";
                     // console.log("poista kehykset");
+                }
+            }
+
+            // tarkistetaan onko "näytä viivakoodi" valittuna
+            naytaviivakoodi = function() {
+                if (document.querySelector('#naytaviivakoodicheckbox').innerHTML == "check_box_outline_blank") {
+                    document.querySelector('.ean').style.visibility = 'hidden';
+                    document.querySelector('.viivakoodi').style.visibility = 'initial';
+                    document.querySelector('#naytaviivakoodicheckbox').innerHTML = "check_box";
+                }
+                else if (document.querySelector('#naytaviivakoodicheckbox').innerHTML == "check_box") {
+                    document.querySelector('.ean').style.visibility = 'initial';
+                    document.querySelector('.viivakoodi').style.visibility = 'hidden';
+                    document.querySelector('#naytaviivakoodicheckbox').innerHTML = "check_box_outline_blank";
                 }
             }
 

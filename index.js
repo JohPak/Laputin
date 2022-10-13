@@ -45,6 +45,7 @@ app.get('/', function (req, res, next) {
         html = html.replace("{tuote}", tuote);
         html = html.replace("Lantahiputin", tuote);
         html = html.replace("{ean}", ean);
+        html = html.replace("{viivakoodi}", ean);
         html = html.replace("{hinta}", hinta + " €");
         if (sulkuhinta != "" && sulkuhinta != NaN) {
             html = html.replace("{sulkuhinta}", "(" + sulkuhinta +")");

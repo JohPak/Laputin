@@ -83,6 +83,18 @@
         line-height: calc((var(--font-size))*1.2);
         font-size: var(--font-size);
     }
+    .viivakoodi {
+        font-family: 'Libre Barcode EAN13 Text', cursive;
+        font-size: 8vh;
+        /* line-height: 10.6vh; */
+        margin: 2px 0;
+        color: #000000;
+        visibility: hidden;
+    }
+    /* .p-ean { */
+        /* margin-top: -65px;
+        position: absolute; */
+    /* } */
     .ean {
         font-family: AntiqueOliveRoman;
         font-size: 1.2vh;

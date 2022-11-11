@@ -2,10 +2,16 @@
         /* height: 100%; */
         }
         @font-face {
-            font-family: AntiqueOliveBlack; src: url('/fonts/AntiqueOliveStd-Black.otf');
+            font-family: ArchivoRegular; src: url('/fonts/Archivo-Regular.ttf');
+            /* font-family: AntiqueOliveBlack; src: url('/fonts/AntiqueOliveStd-Black.otf'); */
         }
         @font-face {
-            font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf');
+            font-family: ArchivoItalic; src: url('/fonts/Archivo-LightItalic.ttf');
+            /* font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf'); */
+        }
+        @font-face {
+            font-family: ArchivoCondensed; src: url('/fonts/Archivo_Condensed-ExtraBold.ttf');
+            /* font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf'); */
         }
 
     body {
@@ -72,7 +78,8 @@
         border-radius: 4px; */
     }
     .tuote {
-        font-family: AntiqueOliveBlack;
+        /* font-family: AntiqueOliveBlack; */
+        font-family: ArchivoCondensed;
         font-size: 4vh;
         margin-top: 0;
         text-transform: uppercase;

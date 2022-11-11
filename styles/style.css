@@ -1,6 +1,6 @@
     html, body {
         /* height: 100%; */
-        }
+        
         @font-face {
             font-family: ArchivoRegular; src: url('/fonts/Archivo-Regular.ttf');
             /* font-family: AntiqueOliveBlack; src: url('/fonts/AntiqueOliveStd-Black.otf'); */
@@ -13,6 +13,7 @@
             font-family: ArchivoCondensed; src: url('/fonts/Archivo_Condensed-ExtraBold.ttf');
             /* font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf'); */
         }
+    }
 
     body {
         margin: 0px;

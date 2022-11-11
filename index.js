@@ -61,6 +61,14 @@ app.get('/', function (req, res, next) {
     }
     else {
         // console.log("Url puuttuu!");
+        // Kokeillaan hakua:
+        app.post('/haku', function(req, res, next) {
+            url = "https://www.minimani.fi/catalogsearch/result/?q=" + req.body.urlinput;
+            console.log("Hauksi tuli: " + url);
+        })
+
+
+
         let html = fs.readFileSync("./views/index.html").toString("utf-8");
         html = html.replace("{url}", "Anna tuotteen www-osoite");
         html = html.replace("{tuote}", "tuote");

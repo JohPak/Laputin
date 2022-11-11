@@ -79,13 +79,14 @@
     }
     .tuote {
         /* font-family: AntiqueOliveBlack; */
-        font-family: ArchivoCondensed;
+        font-family: ArchivoRegular;
         font-size: 4vh;
         margin-top: 0;
         text-transform: uppercase;
     }
     .kuvaus {
-        font-family: AntiqueOliveRoman;
+        /* font-family: AntiqueOliveRoman; */
+        font-family: ArchivoItalic;
         --font-size: 1.3vh;
         line-height: calc((var(--font-size))*1.2);
         font-size: var(--font-size);
@@ -103,19 +104,19 @@
         position: absolute; */
     /* } */
     .ean {
-        font-family: AntiqueOliveRoman;
+        font-family: ArchivoRegular;
         font-size: 1.2vh;
         line-height: 1.6vh;
         margin: 2px 0;
         color: #b5b5b5;
     }
     .hinta {
-        font-family: AntiqueOliveBlack;
+        font-family: ArchivoCondensed;
         font-size: 8vh;
         display: inline-flex;
     }
     .sulkuhinta {
-        font-family: AntiqueOliveBlack;
+        font-family: ArchivoCondensed;
         font-size: 3vh;
         margin-left: 1vw;
         margin-top: 0.8vh;
@@ -255,7 +256,7 @@
   }
   
     label {
-        font-family: AntiqueOliveRoman;
+        font-family: ArchivoRegular;
         color: white;
         font-size: 0.8em;
         display: block;

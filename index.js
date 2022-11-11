@@ -61,14 +61,6 @@ app.get('/', function (req, res, next) {
     }
     else {
         // console.log("Url puuttuu!");
-        // Kokeillaan hakua:
-        app.post('/haku', function(req, res, next) {
-            url = "https://www.minimani.fi/catalogsearch/result/?q=" + req.body.urlinput;
-            console.log("Hauksi tuli: " + url);
-        })
-
-
-
         let html = fs.readFileSync("./views/index.html").toString("utf-8");
         html = html.replace("{url}", "Anna tuotteen www-osoite");
         html = html.replace("{tuote}", "tuote");
@@ -84,6 +76,12 @@ app.post('/hae', function (req, res, next) {
     url = req.body.urlinput;   
     console.log("Saatu url: " + url);
     
+    // if (!url.includes("minimani.fi")) {
+    //     let searchurl = "https://www.minimani.fi/catalogsearch/result/?q=";
+    //     url = searchurl + url;
+    //     console.log("Korjattu url: " + url);
+    // }
+    
 
     let haeSisalto = function() {
         // console.log("siirrytty haeSisaltoon");
@@ -98,6 +96,7 @@ app.post('/hae', function (req, res, next) {
                 //         const sisalto = tulos;
                 //         console.log(sisalto);
                 //       });
+
                     
                     // ean = $('div[itemprop="sku"]').text(); LAKKASI toimimasta 10/2022
                     ean = $('div[class="text-gray-light4"]').text(); // toimii 11.10.2022
@@ -186,7 +185,9 @@ app.post('/hae', function (req, res, next) {
         } // END HAESISALTO
 
 
-        
+
+
+
     haeSisalto();
 
 

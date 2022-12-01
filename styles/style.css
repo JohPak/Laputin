@@ -57,6 +57,16 @@
         justify-content: center;
         height: 60px;
     }
+    .huomio {
+        background-color: #373737;
+        font-family: ArchivoRegular;
+        font-size: 0.9em;
+        color:rgb(179, 179, 179);
+        justify-content: center;
+        display: flex;
+        margin-bottom: 10px;
+        padding: 3px 0;
+    }
     .menubar {
         width: 100%;
         /* background-color: rgb(68, 126, 162); */
@@ -65,7 +75,6 @@
         z-index: 9999;
         position: fixed;
         margin-bottom: 10px;    
-        padding-top: 10px;    
     }
     .spacer {
         width: 100%;
@@ -134,6 +143,7 @@
         height: var(--korkeus);
         width: var(--leveys);
     }
+
     /* kun .sivua hoveroi, .tekstien taustaväri vaihtuu */
     /* https://stackoverflow.com/questions/4502633/how-to-affect-other-elements-when-one-element-is-hovered */
     /* .sivu:hover .tekstit {
@@ -185,7 +195,7 @@
     button {
         width: max-content;
         padding: 0 15px;
-        background-color: #ec6707;
+        background-color: #fa6400;
         border: none;
         color: white;
         text-align: center;
@@ -243,7 +253,7 @@
     appearance: none;
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #ec6707; /* Green background */
+    background: #fa6400; /* Green background */
     cursor: pointer; /* Cursor on hover */
     border-radius: 100%;
   }
@@ -251,7 +261,7 @@
   .slider::-moz-range-thumb {
     width: 25px; /* Set a specific slider handle width */
     height: 25px; /* Slider handle height */
-    background: #ec6707; /* Green background */
+    background: #fa6400; /* Green background */
     cursor: pointer; /* Cursor on hover */
     border-radius: 100%;
   }

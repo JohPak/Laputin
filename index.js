@@ -105,8 +105,13 @@ app.post('/hae', function (req, res, next) {
                     tuote = $('.base').text();
 
                     // haetaan hinta, muutetaan luvuksi, varmistetaan pari desimaalia
-                    hinta = $('meta[itemprop="price"]').attr("content");
+                    // hinta = $('meta[itemprop="price"]').attr("content");
+                    hinta = $('.final-price .price').text(); //JARNON
                     if (hinta != undefined) {
+                        // console.log("MITÄ " +hinta);
+                        hinta = hinta.replace(',','.');
+                        hinta = hinta.match(/\d+\.\d+/); //etsii 1-N kpl numeroita, jonka jälkeen tulee piste ja taas 1-N kpl nroita
+                        // console.log("MITÄ " +hinta);
                         hinta = parseFloat(hinta);
                         hinta = hinta.toFixed(2); //pidetään kaksi desimaalia                  
                     }
@@ -115,13 +120,14 @@ app.post('/hae', function (req, res, next) {
                         // <span id="product-price-105505" data-price-amount="16.95" data-price-type="finalPrice" class="price-wrapper "><span class="price">16,95&nbsp;€</span></span>
 
                         hinta = $('span[data-price-type="finalPrice"]').attr("data-price-amount");
-                        console.log(hinta);
                     }
                     
                     // haetaan sulkuhinta
-                    sulkuhinta = $('span[data-price-type="oldPrice"]').attr("data-price-amount")
+                    // sulkuhinta = $('span[data-price-type="oldPrice"]').attr("data-price-amount") //EI TOIMI ENÄÄ
+                    sulkuhinta = $('.old-price .price > .price').text();
                     
-                    if (sulkuhinta != NaN && sulkuhinta != undefined) {
+                    
+                    if (sulkuhinta != NaN && sulkuhinta != undefined && sulkuhinta != "") {
                         sulkuhinta = sulkuhinta.replace(",", ".");
                         sulkuhinta = parseFloat(sulkuhinta);
                         // console.log(sulkuhinta);
@@ -129,9 +135,9 @@ app.post('/hae', function (req, res, next) {
                     else {
                         sulkuhinta = "";
                     }
-                    
+                
                     hinta = parseFloat(hinta);
-                    
+
                     if (sulkuhinta === hinta) {
                         console.log("ei alennusta, myyntihinta on sama kuin sulkuhinta");
                         sulkuhinta = "";

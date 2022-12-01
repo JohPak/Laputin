@@ -62,7 +62,7 @@ app.get('/', function (req, res, next) {
     else {
         // console.log("Url puuttuu!");
         let html = fs.readFileSync("./views/index.html").toString("utf-8");
-        html = html.replace("{url}", "Anna tuotteen www-osoite");
+        html = html.replace("{url}", "https://www.minimani.fi/living-peili-pyorea-60cm-kehyksella.html");
         html = html.replace("{tuote}", "tuote");
         html = html.replace("{ean}", "ean");
         html = html.replace("{hinta}", "hinta" + " €");
@@ -75,13 +75,12 @@ app.get('/', function (req, res, next) {
 app.post('/hae', function (req, res, next) {
     url = req.body.urlinput;   
     console.log("Saatu url: " + url);
-    
+
     // if (!url.includes("minimani.fi")) {
     //     let searchurl = "https://www.minimani.fi/catalogsearch/result/?q=";
     //     url = searchurl + url;
     //     console.log("Korjattu url: " + url);
     // }
-    
 
     let haeSisalto = function() {
         // console.log("siirrytty haeSisaltoon");
@@ -184,18 +183,13 @@ app.post('/hae', function (req, res, next) {
                 });
         } // END HAESISALTO
 
-
-
-
-
     haeSisalto();
 
-
+    
 
     // setTimeout(() => {  res.redirect("/"); }, 1000);
     
 })
-
 
 app.listen(process.env.PORT || port, () => { //Herokua varten. Heroku asettaa portin process.env.PORT:iin
     // console.log(`Laputin app listening at http://localhost:${port}`)

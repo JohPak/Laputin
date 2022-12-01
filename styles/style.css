@@ -1,17 +1,17 @@
-    html, body {
-        
-        @font-face {
-            font-family: ArchivoRegular; src: url('/fonts/Archivo-Regular.ttf');
-            /* font-family: AntiqueOliveBlack; src: url('/fonts/AntiqueOliveStd-Black.otf'); */
-        }
-        @font-face {
-            font-family: ArchivoItalic; src: url('/fonts/Archivo-LightItalic.ttf');
-            /* font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf'); */
-        }
-        @font-face {
-            font-family: ArchivoCondensed; src: url('/fonts/Archivo_Condensed-ExtraBold.ttf');
-            /* font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf'); */
-        }
+    @font-face {
+        font-family: ArchivoRegular; src: url('/fonts/Archivo-Regular.ttf');
+        /* font-family: AntiqueOliveBlack; src: url('/fonts/AntiqueOliveStd-Black.otf'); */
+    }
+    @font-face {
+        font-family: ArchivoItalic; src: url('/fonts/Archivo-LightItalic.ttf');
+        /* font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf'); */
+    }
+    @font-face {
+        font-family: ArchivoCondensed; src: url('/fonts/Archivo_Condensed-ExtraBold.ttf');
+        /* font-family: AntiqueOliveRoman; src: url('/fonts/AntiqueOliveStd-Roman.otf'); */
+    }
+    @font-face {
+        font-family: Viivakoodi; src: url('/fonts/ViisasEAN_Matala_1_1.otf');
     }
 
     body {
@@ -92,10 +92,11 @@
         font-size: var(--font-size);
     }
     .viivakoodi {
-        font-family: 'Libre Barcode EAN13 Text', cursive;
-        font-size: 8vh;
+        /* font-family: 'Libre Barcode EAN13 Text', cursive; */
+        font-family: 'Viivakoodi';
+        font-size: 4vh;
         /* line-height: 10.6vh; */
-        margin: 2px 0;
+        margin: 20px 0;
         color: #000000;
         visibility: hidden;
     }
@@ -112,7 +113,7 @@
     }
     .hinta {
         font-family: ArchivoCondensed;
-        font-size: 11vh;
+        font-size: 10vh;
         display: inline-flex;
     }
     .sulkuhinta {

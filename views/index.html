@@ -121,28 +121,55 @@
             outputKuvakorkeus.style.marginTop = sliderKuvakorkeus.value; // Display the default slider value
             outputTekstikorkeus.style.marginTop = sliderTekstikorkeus.value; // Display the default slider value
             outputKuvausteksti.style.fontSize = sliderKuvausteksti.value; // Display the default slider value
+
+            // URL PARAMETRIT
+                // let urli = new URL('https://example.com?foo=1&bar=2');
+                let urli = window.location.href; // current url
+                let params = new URLSearchParams(urli.search);
+                let urlisyote = document.getElementsByName("urlinput")[0].value; // user inputted product url
+                    params.set('url', urlisyote);
+
+
+
+                // https://www.sitepoint.com/get-url-parameters-with-javascript/
+                // const queryString = window.location.search;
+                // console.log(queryString);
+
+
+                params.toString(); // "foo=1&bar=2&baz=3"
+                // document.location.search = params;
+
+
             
             // Update the current slider value (each time you drag the slider handle)
             slider.oninput = function() {
                 output = this.value;
                 document.getElementById("kuvakoko").style.width = output + "%";
+                params.set('kuvakoko',output);
+                window.history.replaceState(params, "Title", params);
+                // window.history.pushState("object or string", "Title", window.location.href);
+                
+
             } 
             sliderKuvakorkeus.oninput = function() {
                 outputKuvakorkeus = this.value;
                 document.getElementById("kuvakoko").style.marginTop = outputKuvakorkeus + "%";
-                console.log("Kuvakorkeus: " + outputKuvakorkeus);
+                params.set('kuvakorkeus',outputKuvakorkeus);
+                // console.log("Kuvakorkeus: " + outputKuvakorkeus);
             } 
             slidertekstikorkeus.oninput = function() {
                 outputTekstikorkeus = this.value;
                 document.getElementsByClassName("tuote")[0].style.marginTop = outputTekstikorkeus + "%";
-                console.log(outputTekstikorkeus);
+                params.set('tekstikorkeus', outputTekstikorkeus);
+                // console.log(outputTekstikorkeus);
             } 
             sliderkuvausteksti.oninput = function() {
                 outputKuvausteksti = this.value;
                 document.getElementsByClassName("kuvaus")[0].style.fontSize = outputKuvausteksti + "vh";
                 document.getElementsByClassName("kuvaus")[0].style.lineHeight = "inherit";
+                params.set('kuvausteksti', outputKuvausteksti);
                 // document.getElementsByClassName("kuvaus")[0].style.lineHeight = outputKuvausteksti * 1.2;
-                console.log(outputKuvausteksti);
+                // console.log(outputKuvausteksti);
             } 
 
             let asteet = 0;
@@ -150,7 +177,9 @@
                 asteet = asteet + 90;
                 let apuAsteet = "rotate(" + asteet + "deg)"
                 document.getElementById("kuvakoko").style.transform= apuAsteet;
+                params.set('asteet',apuAsteet);
             }
+
 
 
            
@@ -255,6 +284,9 @@
                 }
 
             }
+
+
+
 
             </script>
 

@@ -1,6 +1,9 @@
 {
   "name": "laputin",
   "version": "1.0.0",
+  "nodemonConfig": {
+    "ext": "js,html,css"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {

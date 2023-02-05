@@ -22,6 +22,7 @@ app.use(express.json()) // To parse the incoming requests with JSON payloads
 // app.use(express.static('public')) 
 app.use(express.static(__dirname)); //NODEN käynnistyssijainti - saattaa muuttua jos appin siirtää jonnekin
 
+
 let url= "https://www.minimani.fi/living-peili-pyorea-60cm-kehyksella.html";
 let ean = "ean-koodi";
 let tuote = "tuote";
@@ -209,6 +210,31 @@ app.post('/hae', function (req, res, next) {
                     // lisäkuvia ei pysty hakemaan cheeriolla, koska cheerio ei näe scriptien luomia tageja
                     // lisakuva = $('img').length;
                     // console.log(lisakuva);
+
+                    let date_ob = new Date();
+                    // current date
+                    // adjust 0 before single digit date
+                    let date = ("0" + date_ob.getDate()).slice(-2);
+                    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+                    let year = date_ob.getFullYear();
+                    let hours = date_ob.getHours();
+                    let minutes = date_ob.getMinutes();
+                    let seconds = date_ob.getSeconds();
+                    console.log(year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
+                    
+                    // Kirjoitetaan lokia
+                    const fs = require('fs');
+                    
+                    
+                    const content = `haettu sisältö ${date}.${month}.${year} ${hours}:${minutes}: ${ean}, ${tuote}, ${hinta} € \n`;
+
+                    fs.appendFile('file.log', content, err => {
+                    if (err) {
+                        console.error(err);
+                    }
+                    console.log("Valmista!");
+                    });
+
 
                     console.log(`haettu sisältö: ${ean}, ${tuote}, ${hinta} €`);
                     console.log("---------------------------------------------");

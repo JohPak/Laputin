@@ -31,6 +31,12 @@ let kuvaus = "kuvaus";
 let kuva = "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png";
 let lisakuva = "lisakuva";
 
+let urlQuery = "";
+let imageSize = "";
+let imageHeight = "";
+let textHeight = "";
+let descriptionText = "";
+
 
 
 app.get('/', function (req, res, next) {
@@ -42,6 +48,10 @@ app.get('/', function (req, res, next) {
         
         // aaltosulkeissa olevat ovat ns. placeholdereita jotka on kirjoitettu html:n puolelle. Tässä ne korvataan muuttujien sisällöllä.
         html = html.replace("https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png", kuva);
+        html = html.replace("{tuotekuvankoko}", 40);
+        html = html.replace("{tuotekuvansijainti}", 0);
+        html = html.replace("{tekstinsijainti}", 0);
+        html = html.replace("{tuotetietojenkoko}", 1.3);
         html = html.replace("{tuote}", tuote);
         html = html.replace("Lantahiputin", tuote);
         html = html.replace("{ean}", ean);
@@ -71,6 +81,34 @@ app.get('/', function (req, res, next) {
         res.send(html);
     }
   });
+
+  // PARAMETRITESTI keskeneräinen
+app.get('*', function (req, res, next) {
+//     let fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl; //haetaan koko urli
+    
+  
+//   fullUrl = fullUrl.replace('/url', '?url');
+//   console.log("Tässä " + fullUrl);
+//   const url = new URL(fullUrl);
+//   const params = new URLSearchParams(url.search);
+  
+//     urlQuery = params.get('url');
+//     imageSize = params.get('kuvakoko');
+//     imageHeight = params.get('kuvakorkeus');
+//     textHeight = params.get('tekstikorkeus');
+//     descriptionText = params.get('kuvausteksti');
+  
+
+//   console.log(`URL Query: ${urlQuery}`); 
+//   console.log(`Image Size: ${imageSize}`); 
+//   console.log(`Image Height: ${imageHeight}`); 
+//   console.log(`Text Height: ${textHeight}`); 
+//   console.log(`Description Text: ${descriptionText}`);
+ 
+
+//     res.send("Helou " + url);
+    res.redirect("/");
+})
 
 app.post('/hae', function (req, res, next) {
     url = req.body.urlinput;   
@@ -172,7 +210,7 @@ app.post('/hae', function (req, res, next) {
                     // lisakuva = $('img').length;
                     // console.log(lisakuva);
 
-                    console.log(`haettu sisältö: ${ean}, ${tuote}, ${hinta}`);
+                    console.log(`haettu sisältö: ${ean}, ${tuote}, ${hinta} €`);
                     console.log("---------------------------------------------");
                     res.redirect("/");
 

@@ -57,6 +57,27 @@
         justify-content: center;
         height: 60px;
     }
+    #lisakuvat {
+        padding:3px 10px;
+    }
+    #lisakuvat img {
+        height: 40px;
+        border-radius: 4px;
+        margin: 3px 3px;
+        transition-duration: 0.4s;
+    }
+    #lisakuvat img:hover {
+        filter: brightness(0.85);
+        color: white;
+    }
+    #lisakuvat p {
+        font-family: ArchivoRegular;
+        color: white;
+        font-size: 0.8em;
+        display: block;
+        padding: 2px 5px;
+        float: left;
+    }
     .huomio {
         background-color: #373737;
         font-family: ArchivoRegular;

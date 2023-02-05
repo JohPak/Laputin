@@ -44,13 +44,22 @@
         justify-content:center;
         padding-top: 16vh;
         position: relative;
-        z-index: 998;
+        z-index: 997;
     }
     #kuvakoko {
         width: 40%;
         height: 40%;
         position: relative;
         z-index: -999;
+    }
+    .uutuus {
+        visibility: hidden;
+    }
+    .uutuus img {
+        z-index: 998;
+        position: absolute;
+        height: 130px;
+        padding: 19vh 7vh;
     }
     .lisakuva {
         padding: 2px;
@@ -162,6 +171,7 @@
         font-size: 3vh;
         margin-left: 1vw;
         margin-top: 1.7vh;
+        min-width: 2em;
     }
     .sulkuhinta:hover {
         background-color: pink;
@@ -258,6 +268,17 @@
         border-color: #F00;
         border-style: solid;
       }
+    
+    .jakaja {   
+        display: inline-block;    
+        position: absolute;
+        height: 40px;
+        width: 4px;
+        background-color: #868686;
+        border: none;
+        border-radius: 4px;
+        margin: 3px 4px;
+    }
 
     .sliderdiv {
         width: 100%;

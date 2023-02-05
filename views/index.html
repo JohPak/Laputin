@@ -21,7 +21,7 @@
             </script>
 
 <div class="menubar noprint">
-        <div class="huomio noprint">Lisätty tuotteelle lisäkuvat, mikäli tuotteella on sellaisia 5.2.2023</div>
+        <div class="huomio noprint">Päivitys 5.2.2023 - tuotteiden lisäkuvat ja uutuus-lätkä</div>
 
             <fieldset class="noprint">
                 <form action="/hae" method="post" class="noprint">
@@ -51,10 +51,11 @@
                     <button onclick="skaalaaesikatselua(0.90)" title="Pienennä esikatselua"><span class="material-icons">remove</span></button>
                     <!-- </fieldset> -->
                 
-                    
+                <div class="jakaja"></div>    
                 
+                <button onclick="naytauutuus()" title="Näytä Uutuus-lätkä" class="btn-harmaa"><span id="naytauutuuscheckbox" class="material-icons">check_box_outline_blank</span>Uutuus</button>
                     
-                <button onclick="alert(`© Johanna Pakkala ${year} (päivitetty 1.12.2022) \n\n Ongelmatilanteissa, kysymyksissä tai kehitysehdotuksissa ota yhteyttä johanna.pakkala@minimani.fi`)" title="Info" class="btn-harmaa btn-oikea"><span class="material-icons-outlined">info</span>Info</button>
+                <button onclick="alert(`© Johanna Pakkala ${year} (päivitetty 5.2.2023) \n\n Ongelmatilanteissa, kysymyksissä tai kehitysehdotuksissa ota yhteyttä johanna.pakkala@minimani.fi`)" title="Info" class="btn-harmaa btn-oikea"><span class="material-icons-outlined">info</span>Info</button>
                     
 
                     <!-- SLIDERIT  -->
@@ -99,11 +100,12 @@
         </div>
         <!-- <div class="sivu" tabindex="-1"> -->
         <div class="sivu">
+            <div class="uutuus"><img src="/img/uutuus.png" title="Uutuus-tuote"></div>
             <!-- <div class="kuva" tabindex="-1"> -->
             <div class="kuva" tabindex="-1">
                 <img src="https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" id="kuvakoko">
-
             </div>
+
             <div class="tuote tekstit" contenteditable="true" tabindex="1" style="margin-top: 0vh;" title="Klikkaa muokataksesi tekstiä">{tuote}</div>
             <div class="ean tekstit" contenteditable="true" tabindex="2" title="Klikkaa muokataksesi ean-koodia">{ean}</div>
             <div class="hinta tekstit" contenteditable="true" tabindex="3" title="Klikkaa muokataksesi hintaa">{hinta}
@@ -267,6 +269,18 @@
                     document.querySelector('.ean').style.visibility = 'initial';
                     document.querySelector('.viivakoodi').style.visibility = 'hidden';
                     document.querySelector('#naytaviivakoodicheckbox').innerHTML = "check_box_outline_blank";
+                }
+            }
+
+            // tarkistetaan onko "Uutuus-lätkä" ruksittuna
+            naytauutuus = function() {
+                if (document.querySelector('#naytauutuuscheckbox').innerHTML == "check_box_outline_blank") {
+                    document.querySelector('.uutuus').style.visibility = 'initial';
+                    document.querySelector('#naytauutuuscheckbox').innerHTML = "check_box";
+                }
+                else if (document.querySelector('#naytauutuuscheckbox').innerHTML == "check_box") {
+                    document.querySelector('.uutuus').style.visibility = 'hidden';
+                    document.querySelector('#naytauutuuscheckbox').innerHTML = "check_box_outline_blank";
                 }
             }
 

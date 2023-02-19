@@ -85,9 +85,10 @@ app.get('/', function (req, res, next) {
     }
   });
 
-app.get('/loki', function (req, res, next){
-    res.sendFile('./loki/file.log', {root: __dirname});
-});
+// EI TOIMI CYCLICISSÄ
+// app.get('/loki', function (req, res, next){
+//     res.sendFile('./loki/file.log', {root: __dirname});
+// });
 
   // PARAMETRITESTI keskeneräinen
 app.get('*', function (req, res, next) {
@@ -228,18 +229,19 @@ app.post('/hae', function (req, res, next) {
                     let seconds = ("0" + date_ob.getSeconds()).slice(-2);
                     console.log(year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
                     
-                    // Kirjoitetaan lokia
-                    const fs = require('fs');
+                    // TIEDOSTOPOLUN KANSSA ONGELMIA CYCLICISSÄ
+                    // // Kirjoitetaan lokia
+                    // const fs = require('fs');
                     
                     
-                    const content = `haettu sisältö ${date}.${month}.${year} ${hours}:${minutes}: ${ean}, ${tuote}, ${hinta} € \n`;
+                    // const content = `haettu sisältö ${date}.${month}.${year} ${hours}:${minutes}: ${ean}, ${tuote}, ${hinta} € \n`;
 
-                    fs.appendFile('loki/file.log', content, err => {
-                    if (err) {
-                        console.error(err);
-                    }
-                    console.log("Valmista!");
-                    });
+                    // fs.appendFile('loki/file.log', content, err => {
+                    // if (err) {
+                    //     console.error(err);
+                    // }
+                    // console.log("Valmista!");
+                    // });
 
 
                     console.log(`haettu sisältö: ${ean}, ${tuote}, ${hinta} €`);

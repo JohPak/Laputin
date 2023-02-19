@@ -22,6 +22,8 @@ app.use(express.json()) // To parse the incoming requests with JSON payloads
 // app.use(express.static('public')) 
 app.use(express.static(__dirname)); //NODEN käynnistyssijainti - saattaa muuttua jos appin siirtää jonnekin
 
+app.use(express.static('/loki'));
+
 
 let url= "https://www.minimani.fi/living-peili-pyorea-60cm-kehyksella.html";
 let ean = "ean-koodi";
@@ -82,6 +84,10 @@ app.get('/', function (req, res, next) {
         res.send(html);
     }
   });
+
+app.get('/loki', function (req, res, next){
+    res.sendFile('./loki/file.log', {root: __dirname});
+});
 
   // PARAMETRITESTI keskeneräinen
 app.get('*', function (req, res, next) {
@@ -218,8 +224,8 @@ app.post('/hae', function (req, res, next) {
                     let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
                     let year = date_ob.getFullYear();
                     let hours = date_ob.getHours();
-                    let minutes = date_ob.getMinutes();
-                    let seconds = date_ob.getSeconds();
+                    let minutes = ("0" + date_ob.getMinutes()).slice(-2);
+                    let seconds = ("0" + date_ob.getSeconds()).slice(-2);
                     console.log(year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
                     
                     // Kirjoitetaan lokia
@@ -228,7 +234,7 @@ app.post('/hae', function (req, res, next) {
                     
                     const content = `haettu sisältö ${date}.${month}.${year} ${hours}:${minutes}: ${ean}, ${tuote}, ${hinta} € \n`;
 
-                    fs.appendFile('file.log', content, err => {
+                    fs.appendFile('loki/file.log', content, err => {
                     if (err) {
                         console.error(err);
                     }

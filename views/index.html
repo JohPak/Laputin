@@ -288,7 +288,7 @@
             let skaalaus = 78;
             skaalaaesikatselua = function(kerroin) {
                 kerroin = parseFloat(kerroin);
-                console.log("Kerroin ", kerroin + " * " + skaalaus + " = " + skaalaus*kerroin);
+                // console.log("Kerroin ", kerroin + " * " + skaalaus + " = " + skaalaus*kerroin);
                 skaalaus = skaalaus * kerroin;
                 document.querySelector('.tausta').style.transform = `scale(${skaalaus}%)`;
                 // -webkit-transform:scale(0.9, 0.9); Safarissa toimis tämä?
@@ -296,7 +296,6 @@
             }
 
             vaihdaKuvanUrl = function() {
-                // console.log("tultiin vaihdaKuvanUrl() -funktioon");
                 let url = window.prompt("Vaihtaaksesi toisen kuvan (png tai jpg), anna sen url-osoite: ", document.querySelector('#kuvakoko').src);
 
                 if (url == null) {
@@ -313,24 +312,27 @@
 
             lisakuvat = function() {
                
+                // selvittää kutsuttaessa kuvan päätteen .jpg tai .png
                 function getFileFormat(kuvanosoite) {
                     var fileName = kuvanosoite.split('/').pop();
                     var fileFormat = fileName.split('.').pop();
+                    // console.log("Kuvan formaatti: "+fileFormat);
                     return fileFormat;
                 }   
-               
+                
                 let lisakuva = [];
-                let kuvanosoite = document.querySelector('#kuvakoko').src;
-                let kuvanPaate = getFileFormat(kuvanosoite); // .jpg tai .png
+                let kuvanosoite = document.querySelector('#kuvakoko').src; // https://www.minimani.fi/media/catalog/product/7/3/7320065006575.jpg
+                let kuvanPaate = getFileFormat(kuvanosoite); // kutsutaan yo. funktiota ja selvitetään kuvan pääte .jpg tai .png
                 let kuvanosoiteIlmanPaatetta = kuvanosoite.replace("." + kuvanPaate, '');
+                
 
-
-                // Lisätään ekaksi lisäkuvaksi peruskuva:
+                // Lisätään ekaksi lisäkuvaksi peruskuva, jotta se voidaan vaihtaa lappuun takaisin lisäkuvan klikkaamisen jälkeen:
                 let imgLisakuva = document.createElement("img");
                 imgLisakuva.src = kuvanosoite;
                 imgLisakuva.title = 'Klikkaa kuvaa vaihtaaksesi sen hintalappuun';
                 imgLisakuva.onclick = function() {vaihdaLisakuva(kuvanosoite); }
                 document.querySelector('#lisakuvat').appendChild(imgLisakuva);
+
 
                 // käydään läpi maks. 20 lisäkuvaa
                 for (let index = 1; index < 20; index++) {
@@ -342,8 +344,9 @@
                         // alert(this.width + 'x' + this.height);
                         
                         // Ja sitten lisäkuviin:
-                        // jos lisäkuva ei sisällä placeholder-kuvaa tai sen korkeus ei ole 1220 px (=placeholderin mitat), lisää se lisäkuvaksi
+                        // jos lisäkuva ei sisällä placeholder-kuvaa ja sen korkeus ei ole 1220 px (=placeholderin mitat), lisää se lisäkuvaksi
                         if (!lisakuva[index-1].includes("minimaniph") && this.width != 1220) {
+                            // console.log("Lisäkuva: "+lisakuva[index-1]);
                             imgLisakuva = document.createElement("img");
                             imgLisakuva.src = lisakuva[index-1];
                             imgLisakuva.title = 'Klikkaa kuvaa vaihtaaksesi sen hintalappuun';
@@ -353,6 +356,7 @@
                         }
                         // Jos lisäkuvia ei ole (#lisakuvat-divissä on lapsielementtejä vain 1), poista koko lisäkuvat-div.
                         else if (document.querySelectorAll('#lisakuvat img').length == 1) {
+                            console.log("Lisäkuvia ei ollut. Poistetaan lisakuvat-div");
                             
                             // ESIMERKKI
                             // let node = document.getElementById("nested");
@@ -364,19 +368,21 @@
                                     node.parentNode.removeChild(node);
                                 }
                             }
-                        }
+                        } // END img.onload()
                         img.src = lisakuva[index-1];
                     }
                     
                     
-                }
+                } // END lisakuvat()
                 
-                lisakuvat();
+                console.log("Ladataan lisäkuvat");
+                lisakuvat(); // Ladataan mahdolliset lisäkuvat valikon alle
                 
                 
                 
     vaihdaLisakuva = function(lisakuvanOsoite) {
         document.querySelector('#kuvakoko').src = lisakuvanOsoite;
+        // console.log("Vaihdettu kuvaksi: " + lisakuvanOsoite);
     }
 
 

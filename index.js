@@ -86,7 +86,7 @@ app.get('/', function (req, res, next) {
   });
 
 app.get('/loki', function (req, res, next){
-    res.sendFile('../../loki/file.log', {root: __dirname});
+    res.sendFile('./loki/file.log', {root: __dirname});
 });
 
   // PARAMETRITESTI keskeneräinen

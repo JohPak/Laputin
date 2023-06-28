@@ -23,6 +23,7 @@
   "homepage": "https://github.com/JohPak/Laputin#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.10",
+    "dependencies": "^0.0.1",
     "express": "^4.17.1",
     "got": "^9.6.0",
     "nodemon": "^2.0.20"

@@ -68,6 +68,8 @@
     }
     #lisakuvat {
         padding:3px 10px;
+        z-index: 999;
+        position: fixed;
     }
     #lisakuvat img {
         height: 40px;

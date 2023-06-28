@@ -8,7 +8,8 @@ const http = require('http');
 const express = require('express');
 const port = 8080
 const path = require('path');
-const { contains, parseHTML } = require('cheerio/lib/static');
+// const { contains, parseHTML } = require('cheerio/lib/static'); Tämä ei enää toimi? 25.6.2023. Korjattu alla:
+const { contains, parseHTML } = require('cheerio');
 
 let app = express();
 

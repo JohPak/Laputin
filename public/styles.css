@@ -1,0 +1,467 @@
+/* public/styles.css */
+
+@font-face {
+    font-family: ArchivoRegular; src: url('/fonts/Archivo-Regular.ttf');
+}
+@font-face {
+    font-family: AntiqueOliveCompact; src: url('/fonts/AntiqueOliveStd-Compact.otf');
+}
+@font-face {
+    font-family: ArchivoItalic; src: url('/fonts/Archivo-LightItalic.ttf');
+}
+@font-face {
+    font-family: ArchivoCondensed; src: url('/fonts/Archivo_Condensed-ExtraBold.ttf');
+}
+@font-face {
+    font-family: Viivakoodi; src: url('/fonts/ViisasEAN_Matala_1_1.otf');
+}
+
+.logo {
+    font-family: 'AntiqueOliveCompact';
+    font-size: 1em;
+    color:#8d8d8d;
+    position: relative;
+    /* display: none; */
+}
+.logonperaan {
+    font-family: 'ArchivoRegular';
+    font-size: 0.85em;
+    color:#d3d3d3;
+    position: relative;
+}
+body {
+    font-family: 'ArchivoRegular';
+    background-image: radial-gradient(#ffffff, #485059);
+    margin: 0px;
+    overflow-x: hidden;
+    height: 100vh;
+}
+
+.toolbar {
+    padding: 10px 15px;
+    width: calc(100% - 30px);  /* Vähennetään padding molemmilta puolilta */
+    background-color: #626262;
+    z-index: 21;
+    margin: 0;
+    margin-bottom: 10px;
+    position: sticky;
+}
+
+
+.search-bar {
+    display: flex;
+    align-items: flex-start;  /* Asettaa elementtien yläreunat samalle tasolle */
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-top: 6px;
+}
+
+@keyframes fadeBackground {
+    0% {
+        background-color: #bbe8bc; 
+        color:black;
+
+    }
+    100% {
+        background-color: #FFFFFF; /* valkoinen */
+    }
+}
+.hakukentta-initial-load {
+    animation: fadeBackground 1.5s forwards;
+}
+
+.hakukentta {
+    flex-grow: 1;   /* Antaa input-kentälle mahdollisuuden kasvaa */
+    margin-top:3px;
+    margin-right: 8px;
+    height: 33px;
+    padding-left:10px;
+    box-shadow: none;
+    -webkit-appearance: none; /* Safari ja Chrome */
+    -moz-appearance: none; /* Firefox */
+    appearance: none;
+    border:none;
+    font-size: 1em;
+}
+
+
+
+.material-icons, .material-icons-outlined {
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+.sliders {
+    width: 100%; /* Asettaa leveyden 100%:ksi */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0;  /* Varmistetaan, että ei ole ylimääräistä paddingia */
+    margin: 0;  /* Varmistetaan, että ei ole marginaalia */
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    align-items: start; /* Asettaa label-elementin vasempaan reunaan */
+}
+
+.slider-container label {
+    color: #dddddd;
+    font-size: 0.8em;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+/* itse sliderit */
+input[type="range"] {
+    width: 100%;
+    appearance: none;
+    width: 90%;
+    height: 7px;
+    background: #868686;
+    outline: none;
+    transition: opacity .2s;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+/* sliderin nuppi */
+input[type="range"]::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        background: #fa6400;
+        cursor: pointer;
+        border-radius: 100%;
+}
+
+button {
+    color: #ffffff; /* Valkoinen tekstiväri */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Siirtymä */
+    line-height: 2;
+    width: max-content;
+    padding: 0 15px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.9em;
+    margin-right: 3px;
+    margin-bottom: 7px;
+}
+input, button {
+    height: 35px;
+    border-radius: 4px;
+}
+
+
+.orange-btn {
+    background-color: #fa6400;
+}
+.orange-btn:hover {
+    background-color: #d55800; 
+}
+.gray-btn:hover {
+    background-color: #6c6c6c; 
+}
+
+.gray-btn {
+    background-color: #868686;
+}
+.hakunappi {
+    margin-top: 3px;
+    width:100px;
+}
+#searchButton {
+    transition: background-color 0.2s ease; /* Siirtymä */
+}
+
+.thumbnail {
+    width: 50px; /* tai mikä tahansa haluamasi koko */
+    margin-right: 5px;
+}
+
+
+.content {
+    margin: 15px;
+    justify-content: center;
+    display: flex;
+    transform-origin: top;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+}
+.kehys {
+    z-index: 20;
+    position: absolute;
+    --korkeus: 75vh;
+    --leveys: calc( ( var( --korkeus ) ) / 1.41 );
+    height: var(--korkeus);
+    width: var(--leveys);
+    user-select: none;
+    pointer-events: none;
+}
+.kehys img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+/* Apuviivat mikäli käyttäjä ei halua tulostaa kehyksiä */
+.hintalappu.active::after {
+    content: "";
+    position: absolute;
+    width: 46.2vh;
+    height: 59.3vh;
+    border: 1px solid magenta;
+    top: 41.6vh;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+}
+
+.hintalappu {
+    background-color: white;
+    position: relative; /* relative antaa sinun asemoida lapsielementtejä suhteessa parent-elementtiin */
+    --korkeus: 75vh;
+    --leveys: calc( ( var( --korkeus ) ) / 1.41 );
+    height: var(--korkeus);
+    width: var(--leveys);
+    border: 1px solid #838383;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);  /* varjo */
+}
+.tuotekuva {
+    display: flex;
+    justify-content: center;
+    padding-top: 12vh;
+    position: relative;
+    --korkeus: 75vh;
+    --leveys: calc( ( var( --korkeus ) ) / 1.41 );
+    width: var(--leveys);
+    overflow: hidden;
+}
+.tuotekuva-img {
+    width: 30vh;
+    height: auto;
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+    transform-origin: center center;
+}
+.tekstit {
+    padding: 0 6vh;
+    position: relative;
+    z-index: 21;
+}
+.tekstit:hover {
+    background-color: rgb(255, 248, 174, 0.5);
+    cursor: pointer;
+}
+.brandi {
+    font-family: ArchivoRegular;
+    font-size: 1.4vh;
+    line-height: 1.4vh;
+    margin-top:5px;
+}
+.tuote {
+    font-family: ArchivoCondensed;
+    font-size: 3vh;
+    text-transform: uppercase;
+}
+.ean {
+    font-family: ArchivoRegular;
+    font-size: 1vh;
+    line-height: 1.4vh;
+    margin: 2px 0;
+    color: #b5b5b5;
+}
+.hinta {
+    font-family: ArchivoCondensed;
+    font-size: 8vh;
+    display: inline-flex;
+    white-space: nowrap;
+}
+.sulkuhinta {
+    font-family: ArchivoCondensed;
+    font-size: 2.4vh;
+    margin-top: 1vh;
+    min-width: 2em;
+    padding-left: 8px;
+}
+.sulkuhinta:hover {
+    background-color: rgb(171, 253, 201);
+}
+.kuvaus {
+    font-family: 'ArchivoItalic';
+    --font-size: 1vh;
+    line-height: calc((var(--font-size))*1.2);
+    font-size: var(--font-size);
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 1vh;
+}
+.parent-lisakuvat {
+    position: relative;
+}
+
+.verkkokauppalinkki {
+    position: absolute;
+    left: 15px;
+    top: 0;
+    font-family: 'ArchivoRegular';
+    font-size: 0.8em;
+    color: white;
+    z-index: 22;
+}
+
+.lisakuvat {
+    z-index: 22;
+    position: absolute;
+    left: 15px;
+    top: 20px; /* tai mikä tahansa arvo, joka sijoittaa sen .verkkokauppalinkin alle */
+}
+
+.lisakuvat p {
+    font-size: 0.8em;
+    font-family: 'ArchivoRegular';
+    color: white;
+    display: block; /* Käytetään block displayä, jotta kuvat tulevat tekstin alapuolelle */
+    margin-bottom: 5px; /* Voit säätää tätä arvoa, jos haluat lisätä enemmän tai vähemmän tilaa tekstin ja kuvien välille */
+}
+
+.lisakuvat img {
+    border-radius: 4px;
+    transition: filter 0.3s ease;
+    display: block; /* Käytetään block displayä, jotta kuvat tulevat allekkain */
+    margin-top: 5px; /* lisätään marginaalia yläpuolelle, jotta kuvat eivät ole liian lähellä toisiaan */
+    cursor: pointer;
+}
+
+.lisakuvat img:hover {
+    filter: brightness(0.8);
+}
+
+
+.viivakoodi {
+    font-family: 'Viivakoodi';
+    font-size: 3vh;
+    margin:5px 0;
+    color:#000000;
+    display: none;
+}
+.virheviesti {
+    font-family: ArchivoCondensed;
+    font-size: 4vh;
+    padding: 15px;
+    margin: 0;
+    color: #d5d5d5;
+}
+.url-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 22;
+}
+
+.url-popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: #626262;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 70vw;
+    text-align: center;
+    border-radius: 4px;
+    color: white;
+    font-family: 'ArchivoRegular';
+    font-size:1.2em;
+}
+
+.url-popup-content input {
+    width: 98%;
+    padding: 5px;
+    margin-bottom: 10px;
+    flex-grow: 1;   /* Antaa input-kentälle mahdollisuuden kasvaa */
+    height: 33px;
+    box-shadow: none;
+    -webkit-appearance: none; /* Safari ja Chrome */
+    -moz-appearance: none; /* Firefox */
+    appearance: none;
+    border:none;
+    font-size: 0.8em;
+}
+#currentUrl {
+    font-size: 0.8em;
+    color: #c8c8c8;
+    background-color: gray;
+    padding: 10px;
+    border-radius: 4px;
+}
+#cancelButton {
+    background-color: #989898;
+    color:white
+}
+#changeUrlButton {
+    background-color: #fa6400;
+    color:white;
+}
+
+#cancelButton:hover, #changeUrlButton:hover {
+    filter: brightness(0.9);
+}
+
+.uutuus img {
+    position: absolute;
+    height: 11vh;
+    top:13.5vh;
+    left: 5vh;
+    z-index: 21;
+    display: none;
+}
+
+
+
+
+
+
+
+/* 
+_______    _           _             
+|__   __|  | |         | |            
+   | |_   _| | ___  ___| |_ _   _ ___ 
+   | | | | | |/ _ \/ __| __| | | / __|
+   | | |_| | | (_) \__ \ |_| |_| \__ \
+   |_|\__,_|_|\___/|___/\__|\__,_|___/ */
+
+   @media print {
+    /* Piilotetaan tietyt elementit tulostuksen aikana */
+    .toolbar, .search-bar, .sliders, .url-popup, .parent-lisakuvat {
+        display: none;
+    }
+    
+    body {
+        background-color: #fff; /* Tulostetaan valkoiselle taustalle */
+    }
+
+    .content {
+        margin: 0; /* Poista marginaalit contentilta tulostettaessa */
+        transform: scale(1) !important; /* Nollataan näkymän skaalauksen vaikutukset tulostukseen */
+    }
+
+    
+    .kehys, .hintalappu {
+        transform: scale(1.33);
+        transform-origin: top;
+        /* pakottaa tulostamaan vain yhden sivun */
+        position: fixed !important;
+    }
+    .hintalappu {
+        box-shadow: none;
+    }
+    /* Piilotetaan magentat apuviivat */
+    .hintalappu.active::after {
+        display: none;
+    }
+    
+
+}

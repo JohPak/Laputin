@@ -1,15 +1,14 @@
 const express = require('express');
 const axios = require('axios');
-const xml2js = require('xml2js');
-const fs = require('fs');
 const path = require('path');
 const app = express();
 const port = 3000;
+const cheerio = require('cheerio');
+const puppeteer = require('puppeteer'); // käytetään headless-selainta jotta pystytään hakemaan sivulla dynaamisesti luodut lisäkuvat (näihin ei pääse muuten kiinni)
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-const XML_FILE_PATH = path.join(__dirname, 'daily_xml_data.xml');
 
 function formatPrice(priceString) {
     if (!priceString || typeof priceString !== "string") {
@@ -24,30 +23,66 @@ function formatPrice(priceString) {
     return price.toFixed(2).replace('.', ',');
 }
 
-async function fetchXmlData() {
-    // const response = await axios.get('https://www.minimani.fi/media/feed/Johannan_testi_xml.xml');
-    const response = await axios.get('https://www.minimani.fi/media/feed/publitas-04-2023.xml');
+async function scrapeImageUrls(url) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    // Get image URLs
+    const imageUrls = await page.evaluate(() => {
+        const imageUrls = [];
+        const regex = /cache\/[a-f0-9]{32}\//;
+
+        // Fetching main image from #gallery
+        const mainImageElement = document.querySelector('#gallery img');
+        if (mainImageElement) {
+            let mainImageUrl = mainImageElement.src;
+            mainImageUrl = mainImageUrl.replace(regex, ''); // Applying regex
+            imageUrls.push(mainImageUrl);
+        }
+
+        // Fetching additional images from #thumbs
+        const thumbImages = document.querySelectorAll('#thumbs img');
+        thumbImages.forEach((img) => {
+            let imageUrl = img.src;
+            imageUrl = imageUrl.replace(regex, ''); // Applying regex
+            if (imageUrl && !imageUrls.includes(imageUrl)) {
+                imageUrls.push(imageUrl);
+            }
+        });
+
+        return imageUrls;
+    });
+
+    await browser.close();
+    return imageUrls;
+}
+async function scrapeDescription(url) {
+    try {
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+        
+        // Get content of div with class 'prose'
+        const description = $('.prose').html();
+        
+        return description;
+    } catch (error) {
+        console.error("Error fetching the URL: ", error);
+        return null;
+    }
+}
+
+
+
+
+
+async function fetchJsonData(query) {
+    const url = `https://eucs13.ksearchnet.com/cloud-search/n-search/search?ticket=klevu-15596371644669941&term=${encodeURIComponent(query)}&paginationStartsFrom=0&sortPrice=false&ipAddress=undefined&analyticsApiKey=klevu-15596371644669941&showOutOfStockProducts=true&klevuFetchPopularTerms=false&klevu_priceInterval=500&fetchMinMaxPrice=true&klevu_multiSelectFilters=true&noOfResults=1&enableFilters=false&filterResults=&visibility=search&category=KLEVU_PRODUCT&sv=229&lsqt=&responseType=json`;
+    const response = await axios.get(url);
     return response.data;
 }
 
-async function getXmlDataForToday() {
-    const today = new Date().toISOString().split('T')[0];
-    const exists = fs.existsSync(XML_FILE_PATH);
 
-    if (exists) {
-        const fileStats = fs.statSync(XML_FILE_PATH);
-        const fileDate = new Date(fileStats.mtime).toISOString().split('T')[0];
-
-        if (fileDate === today) {
-            console.log("XML ladattu jo tänään, käytetään sitä.");
-            return fs.readFileSync(XML_FILE_PATH, 'utf8');
-        }
-    }
-
-    const data = await fetchXmlData();
-    fs.writeFileSync(XML_FILE_PATH, data, 'utf8');
-    return data;
-}
 
 // Apufunktio tarkistamaan, vastaako tuote käyttäjän antamaa hakusanaa
 function productMatchesQuery(product, query) {
@@ -76,58 +111,78 @@ function productMatchesQuery(product, query) {
 
 app.get('/products', async (req, res) => {
     const query = req.query.query;
-    let product;  // Käytetään yksikkömuotoa, koska palautamme vain yhden tuotteen
+    let product;
     let querySubmitted = false;
     let errorMessage = null;
+    const stringToReplace = "needtochange/media/klevu_images/200X200/";
+    const replacementString = "media/catalog/product/";
 
     if (query) {
         querySubmitted = true;
 
         try {
-            const data = await getXmlDataForToday();
-            const parsedData = await xml2js.parseStringPromise(data);
+            const data = await fetchJsonData(query);
             
-            if (!parsedData.rss || !parsedData.rss.channel || !parsedData.rss.channel[0].item) {
-                res.status(400).send('XML-tiedostossa ei ole tietueita.');
-                return;
-            }
+            const allProducts = await Promise.all(data.result.map(async item => {
+                // Scrape description from the product page
+                const description = await scrapeDescription(item.url);
 
-            const allProducts = parsedData.rss.channel[0].item.map(item => ({
-                title: item.title[0],
-                description: item.description[0],
-                link: item.link[0],
-                brand: item['g:brand'][0],
-                price: formatPrice(item['g:price'][0]),
-                saleprice: formatPrice(item['g:sale_price'][0]),
-                imageLink: item['g:image_link'][0],
-                alternateImages: item['g:image_alternate'][0].split(',').map(url => url.trim()),
-                id: item['g:id'][0]
+                // Format prices
+                let hinta = formatPrice(item.price);
+                let tarjoushinta = formatPrice(item.salePrice);
+                
+                if (parseFloat(tarjoushinta) >= parseFloat(hinta)) {
+                    tarjoushinta = null;
+                }
+                
+
+
+                return {
+                    title: item.name,
+                    description: description || "",
+                    link: item.url,
+                    brand: item.brandit || "",
+                    saleprice: tarjoushinta, // <-- Käytä uutta muuttujan nimeä
+                    price: hinta, // <-- Käytä uutta muuttujan nimeä
+                    imageLink: item.image.replace(stringToReplace, replacementString),
+                    id: item.sku
+                };
+                
             }));
 
-            // Etsi ensimmäinen tuote, joka vastaa hakusanaa
             product = allProducts.find(product => productMatchesQuery(product, query));
 
-            if (!product) {
-                errorMessage = "Ei hakutuloksia.";
+            if (product) {
+                // Scrape additional image URLs from the product page
+                product.additionalImageUrls = await scrapeImageUrls(product.link);
+            } else {
+                errorMessage = "Ei hakutuloksia";
             }
             
         } catch (error) {
+            console.error("Detailed error:", error); // Tulostaa virheen tiedot konsoliin
+        
             if (error.response && error.response.status === 404) {
-                res.status(404).send('XML-tiedostoon ei saatu yhteyttä.');
+                res.status(404).send('JSON-tiedostoon ei saatu yhteyttä.');
                 return;
             } else {
                 res.status(500).send('Virhe datan hakemisessa.');
                 return;
             }
         }
+        
     }
 
     res.render('products', {
-        product: product,  // Lähetä tuote näkymälle
+        product: product,
         errorMessage: errorMessage,
         querySubmitted: querySubmitted
     });
 });
+
+
+
+
 
 app.listen(port, () => {
     console.log(`App is running at http://localhost:${port}/products`);

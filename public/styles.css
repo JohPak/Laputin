@@ -223,7 +223,7 @@ input, button {
     --leveys: calc( ( var( --korkeus ) ) / 1.41 );
     height: var(--korkeus);
     width: var(--leveys);
-    border: 1px solid #838383;
+    /* border: 1px solid #838383; */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);  /* varjo */
 }
 .tuotekuva {
@@ -257,6 +257,7 @@ input, button {
     font-size: 1.4vh;
     line-height: 1.4vh;
     margin-top:5px;
+    margin-bottom: 0.3vh;
 }
 .tuote {
     font-family: ArchivoCondensed;
@@ -344,11 +345,14 @@ input, button {
     display: none;
 }
 .virheviesti {
-    font-family: ArchivoCondensed;
-    font-size: 4vh;
-    padding: 15px;
-    margin: 0;
+    font-family: 'ArchivoRegular';
+    font-size: 1.4vh;
+    padding: 3px 15px;
+    margin: 9px 0;
     color: #d5d5d5;
+    background: darkred;
+    width: fit-content;
+    border-radius: 0 6px 6px 0;
 }
 .url-popup {
     display: none;

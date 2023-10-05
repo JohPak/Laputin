@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
 
-    <title>Minimani - Laputin 1.1</title>
+    <title>Minimani - Laputin 2</title>
 </head>
 
 <body>
@@ -65,19 +65,12 @@
         <div class="parent-lisakuvat noprint">
             
             <a href="<%= product.link %>" class="verkkokauppalinkki" target="_blank">Katso tuote verkkokaupassa</a>
-
+    
             <div class="lisakuvat noprint">
                 <p>Vaihda kuva:</p>
-                
-                <% if (product && product.additionalImageUrls) { %>
-                    <div class="additional-images">
-                        <% product.additionalImageUrls.forEach(function(imageUrl) { %>
-                            <img src="<%= imageUrl %>" alt="<%= product.title %>" class="thumbnail">
-                        <% }); %>
-                    </div>
-                <% } %>
-                
-                
+                <% product.alternateImages.forEach(img => { %>
+                    <img src="<%= img %>" alt="<%= product.title %>" class="thumbnail">
+                <% }); %>
             </div><!-- END lisäkuvat-->
     
         </div><!-- END parent-lisäkuvat -->

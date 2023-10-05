@@ -1,4 +1,5 @@
 *.xml
+*.json
 
 # Riippuvuudet
 /node_modules

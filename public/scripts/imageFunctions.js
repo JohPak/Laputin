@@ -20,7 +20,6 @@ function rotateImage() {
 }
 
 // Yksityinen funktio näyttää kuvan URL:n popup-ikkunassa
-// Yksityinen funktio näyttää kuvan URL:n popup-ikkunassa
 function showImageURLPopup() {
     document.getElementById('urlButton').addEventListener('click', function() {
         const imageUrl = document.querySelector('.tuotekuva-img').getAttribute('src');

@@ -11,6 +11,7 @@ const chrome = require('selenium-webdriver/chrome');
 // Aseta chromedriverin polku
 const chromeDriverPath = path.join(__dirname, 'node_modules', 'chromedriver', 'lib', 'chromedriver', 'chromedriver');
 const chromeOptions = new chrome.Options().headless().setChromeBinaryPath(chromeDriverPath);
+console.log('ChromeDriver path:', chromeDriverPath);
 
 
 

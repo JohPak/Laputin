@@ -8,18 +8,23 @@ const cheerio = require('cheerio');
 const { Builder, By } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
+// Aseta chromedriverin polku
+const chromeDriverPath = path.join(__dirname, 'node_modules', 'chromedriver', 'lib', 'chromedriver', 'chromedriver');
+const chromeOptions = new chrome.Options().setChromeOptions(new chrome.Options().headless().setChromeBinaryPath(chromeDriverPath));
+
+
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 
-// ****** FUNKTIOT **************************
 
+// ****** FUNKTIOT **************************
 
 async function scrapeImageUrls(url, mainImageUrl) {
     let driver;
 
     try {
-        driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build();
+        driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
         await driver.get(url);
 
         // Haetaan kuvien URL:t

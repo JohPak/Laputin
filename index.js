@@ -1,14 +1,35 @@
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
+const { chromium } = require('playwright'); // Tuodaan chromium Playwrightista
 const app = express();
 const port = 3000;
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer'); // käytetään headless-selainta jotta pystytään hakemaan sivulla dynaamisesti luodut lisäkuvat (näihin ei pääse muuten kiinni)
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
+
+// ****** FUNKTIOT **************************
+
+async function scrapeImageUrls(url, mainImageUrl) {
+    const browser = await chromium.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    // Haetaan kuvien URL:t
+    const additionalImageUrls = await page.$$eval('#thumbs img', imgs => imgs.map(img => img.src));
+
+    await browser.close();
+
+    // Muokataan lisäkuvien URL:eja regexillä ja lisätään pääkuva ensimmäiseksi
+    const allImageUrls = [
+        mainImageUrl,
+        ...additionalImageUrls.map(url => url.replace(/cache\/[a-f0-9]{32}\//, ''))
+    ];
+
+    return allImageUrls;
+}
 
 function formatPrice(priceString) {
     if (!priceString || typeof priceString !== "string") {
@@ -23,40 +44,6 @@ function formatPrice(priceString) {
     return price.toFixed(2).replace('.', ',');
 }
 
-async function scrapeImageUrls(url) {
-    const browser = await puppeteer.launch();
-    const page = await browser.newPage();
-    await page.goto(url);
-
-    // Get image URLs
-    const imageUrls = await page.evaluate(() => {
-        const imageUrls = [];
-        const regex = /cache\/[a-f0-9]{32}\//;
-
-        // Fetching main image from #gallery
-        const mainImageElement = document.querySelector('#gallery img');
-        if (mainImageElement) {
-            let mainImageUrl = mainImageElement.src;
-            mainImageUrl = mainImageUrl.replace(regex, ''); // Applying regex
-            imageUrls.push(mainImageUrl);
-        }
-
-        // Fetching additional images from #thumbs
-        const thumbImages = document.querySelectorAll('#thumbs img');
-        thumbImages.forEach((img) => {
-            let imageUrl = img.src;
-            imageUrl = imageUrl.replace(regex, ''); // Applying regex
-            if (imageUrl && !imageUrls.includes(imageUrl)) {
-                imageUrls.push(imageUrl);
-            }
-        });
-
-        return imageUrls;
-    });
-
-    await browser.close();
-    return imageUrls;
-}
 async function scrapeDescription(url) {
     try {
         const { data } = await axios.get(url);
@@ -72,42 +59,30 @@ async function scrapeDescription(url) {
     }
 }
 
-
-
-
-
 async function fetchJsonData(query) {
     const url = `https://eucs13.ksearchnet.com/cloud-search/n-search/search?ticket=klevu-15596371644669941&term=${encodeURIComponent(query)}&paginationStartsFrom=0&sortPrice=false&ipAddress=undefined&analyticsApiKey=klevu-15596371644669941&showOutOfStockProducts=true&klevuFetchPopularTerms=false&klevu_priceInterval=500&fetchMinMaxPrice=true&klevu_multiSelectFilters=true&noOfResults=1&enableFilters=false&filterResults=&visibility=search&category=KLEVU_PRODUCT&sv=229&lsqt=&responseType=json`;
     const response = await axios.get(url);
     return response.data;
 }
 
-
-
-// Apufunktio tarkistamaan, vastaako tuote käyttäjän antamaa hakusanaa
 function productMatchesQuery(product, query) {
     const productName = product.title.toLowerCase();
-    const productId = String(product.id); // Muutetaan ID merkkijonoksi
+    const productId = String(product.id);
 
     const searchQuery = query.toLowerCase();
-    const isNumericQuery = /^\d+$/.test(searchQuery); // Tarkistaa, ovatko kaikki merkit numeroita
+    const isNumericQuery = /^\d+$/.test(searchQuery);
 
-    // Ensin tarkistetaan, löytyykö hakusana tuotenimestä
     const searchWords = searchQuery.split(' ');
     const nameMatch = searchWords.every(word => productName.includes(word));
 
     if (nameMatch) {
         return true;
     } else if (isNumericQuery) {
-        // Jos tuotenimestä ei löytynyt, ja hakusana on numeerinen, tarkistetaan ID:stä
         return productId === searchQuery;
     } else {
-        // Jos mikään ei löytynyt, palautetaan false
         return false;
     }
 }
-
-
 
 app.get('/products', async (req, res) => {
     const query = req.query.query;
@@ -124,43 +99,50 @@ app.get('/products', async (req, res) => {
             const data = await fetchJsonData(query);
             
             const allProducts = await Promise.all(data.result.map(async item => {
-                // Scrape description from the product page
                 const description = await scrapeDescription(item.url);
 
-                // Format prices
                 let hinta = formatPrice(item.price);
                 let tarjoushinta = formatPrice(item.salePrice);
                 
                 if (parseFloat(tarjoushinta) >= parseFloat(hinta)) {
                     tarjoushinta = null;
                 }
-                
 
+                // Extract image file extension
+                const imageExtension = path.extname(item.image);
+
+                // Create additional image URLs
+                const additionalImageUrls = Array.from({ length: 4 }, (_, i) => 
+                    item.image
+                        .replace(stringToReplace, replacementString)
+                        .replace(/cache\/[a-f0-9]{32}\//, '')
+                        .replace(imageExtension, `_${i + 2}${imageExtension}`)
+                );
+
+                // Muokataan pääkuvan URL ja tallennetaan se muuttujaan
+                const mainImageUrl = item.image.replace(stringToReplace, replacementString).replace(/cache\/[a-f0-9]{32}\//, '');
 
                 return {
                     title: item.name,
                     description: description || "",
                     link: item.url,
                     brand: item.brandit || "",
-                    saleprice: tarjoushinta, // <-- Käytä uutta muuttujan nimeä
-                    price: hinta, // <-- Käytä uutta muuttujan nimeä
-                    imageLink: item.image.replace(stringToReplace, replacementString),
+                    saleprice: tarjoushinta,
+                    price: hinta,
+                    imageLink: item.image.replace(stringToReplace, replacementString).replace(/cache\/[a-f0-9]{32}\//, ''),
+                    additionalImageUrls: await scrapeImageUrls(item.url, mainImageUrl), // Käytä Nightmare-funktiota
                     id: item.sku
                 };
-                
             }));
 
             product = allProducts.find(product => productMatchesQuery(product, query));
 
-            if (product) {
-                // Scrape additional image URLs from the product page
-                product.additionalImageUrls = await scrapeImageUrls(product.link);
-            } else {
+            if (!product) {
                 errorMessage = "Ei hakutuloksia";
             }
             
         } catch (error) {
-            console.error("Detailed error:", error); // Tulostaa virheen tiedot konsoliin
+            console.error("Detailed error:", error);
         
             if (error.response && error.response.status === 404) {
                 res.status(404).send('JSON-tiedostoon ei saatu yhteyttä.');
@@ -170,7 +152,6 @@ app.get('/products', async (req, res) => {
                 return;
             }
         }
-        
     }
 
     res.render('products', {
@@ -179,10 +160,6 @@ app.get('/products', async (req, res) => {
         querySubmitted: querySubmitted
     });
 });
-
-
-
-
 
 app.listen(port, () => {
     console.log(`App is running at http://localhost:${port}/products`);

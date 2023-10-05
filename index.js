@@ -5,6 +5,8 @@ const { chromium } = require('playwright'); // Tuodaan chromium Playwrightista
 const app = express();
 const port = 3000;
 const cheerio = require('cheerio');
+const { Builder, By } = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -12,24 +14,39 @@ app.use(express.static('public'));
 
 // ****** FUNKTIOT **************************
 
+
 async function scrapeImageUrls(url, mainImageUrl) {
-    const browser = await chromium.launch();
-    const page = await browser.newPage();
-    await page.goto(url);
+    let driver;
 
-    // Haetaan kuvien URL:t
-    const additionalImageUrls = await page.$$eval('#thumbs img', imgs => imgs.map(img => img.src));
+    try {
+        driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build();
+        await driver.get(url);
 
-    await browser.close();
+        // Haetaan kuvien URL:t
+        const images = await driver.findElements(By.css('#thumbs img'));
+        const additionalImageUrls = [];
 
-    // Muokataan lisäkuvien URL:eja regexillä ja lisätään pääkuva ensimmäiseksi
-    const allImageUrls = [
-        mainImageUrl,
-        ...additionalImageUrls.map(url => url.replace(/cache\/[a-f0-9]{32}\//, ''))
-    ];
+        for (const img of images) {
+            additionalImageUrls.push(await img.getAttribute('src'));
+        }
 
-    return allImageUrls;
+        // Muokataan lisäkuvien URL:eja regexillä ja lisätään pääkuva ensimmäiseksi
+        const allImageUrls = [
+            mainImageUrl,
+            ...additionalImageUrls.map(url => url.replace(/cache\/[a-f0-9]{32}\//, ''))
+        ];
+
+        return allImageUrls;
+    } catch (error) {
+        console.error("Error scraping image URLs:", error);
+        return [mainImageUrl]; // Palautetaan ainakin pääkuva virhetilanteessa
+    } finally {
+        if (driver) {
+            await driver.quit(); // Varmistetaan, että ajuri suljetaan aina
+        }
+    }
 }
+
 
 function formatPrice(priceString) {
     if (!priceString || typeof priceString !== "string") {

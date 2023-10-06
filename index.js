@@ -83,7 +83,7 @@ function productMatchesQuery(product, query) {
     return nameMatch || (isNumericQuery && productId === searchQuery);
 }
 
-app.get('/products', async (req, res) => {
+app.get('/', async (req, res) => {
     const query = req.query.query;
     let product;
     let querySubmitted = false;

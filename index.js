@@ -1,58 +1,44 @@
+// npm run dev
+
 const express = require('express');
 const axios = require('axios');
-const path = require('path');
-const { chromium } = require('playwright'); // Tuodaan chromium Playwrightista
+const cheerio = require('cheerio');
 const app = express();
 const port = 3000;
-const cheerio = require('cheerio');
-const { Builder, By } = require('selenium-webdriver');
-const chrome = require('selenium-webdriver/chrome');
-
-// Aseta chromedriverin polku
-const chromeDriverPath = path.join(__dirname, 'node_modules', 'chromedriver', 'lib', 'chromedriver', 'chromedriver');
-const chromeOptions = new chrome.Options().headless().setChromeBinaryPath(chromeDriverPath);
-console.log('ChromeDriver path:', chromeDriverPath);
-
-
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-
-
 // ****** FUNKTIOT **************************
 
-async function scrapeImageUrls(url, mainImageUrl) {
-    let driver;
 
+
+async function fetchImageUrls(url) {
     try {
-        driver = await new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
-        await driver.get(url);
+        const { data } = await axios.get(url); // Hae sivun HTML
+        const correctedData = data.replace(/\\\//g, '/'); // Korvaa kaikki '\/' merkit '/' merkeillä
 
-        // Haetaan kuvien URL:t
-        const images = await driver.findElements(By.css('#thumbs img'));
-        const additionalImageUrls = [];
+        // Etsi kaikki merkkijonot, jotka alkavat "full":"https://www.minimani.fi/media/catalog/product
+        const regex = /"full":"https:\/\/www\.minimani\.fi\/media\/catalog\/product[^"]+/g;
+        const matches = correctedData.match(regex);
 
-        for (const img of images) {
-            additionalImageUrls.push(await img.getAttribute('src'));
-        }
+        // Poista "full": alusta ja palauta löydetyt URL:t
+        const imageUrls = matches ? matches.map(match => match.replace(/"full":"/, '')) : [];
 
-        // Muokataan lisäkuvien URL:eja regexillä ja lisätään pääkuva ensimmäiseksi
-        const allImageUrls = [
-            mainImageUrl,
-            ...additionalImageUrls.map(url => url.replace(/cache\/[a-f0-9]{32}\//, ''))
-        ];
+        // Poista duplikaatit käyttämällä Set-objektia ja spread-syntaksia
+        const uniqueImageUrls = [...new Set(imageUrls)];
 
-        return allImageUrls;
+        return uniqueImageUrls;
     } catch (error) {
-        console.error("Error scraping image URLs:", error);
-        return [mainImageUrl]; // Palautetaan ainakin pääkuva virhetilanteessa
-    } finally {
-        if (driver) {
-            await driver.quit(); // Varmistetaan, että ajuri suljetaan aina
-        }
+        console.error("Error fetching the URL: ", error);
+        return [];
     }
 }
+
+
+
+
+
 
 
 function formatPrice(priceString) {
@@ -72,10 +58,7 @@ async function scrapeDescription(url) {
     try {
         const { data } = await axios.get(url);
         const $ = cheerio.load(data);
-        
-        // Get content of div with class 'prose'
         const description = $('.prose').html();
-        
         return description;
     } catch (error) {
         console.error("Error fetching the URL: ", error);
@@ -92,20 +75,12 @@ async function fetchJsonData(query) {
 function productMatchesQuery(product, query) {
     const productName = product.title.toLowerCase();
     const productId = String(product.id);
-
     const searchQuery = query.toLowerCase();
     const isNumericQuery = /^\d+$/.test(searchQuery);
-
     const searchWords = searchQuery.split(' ');
     const nameMatch = searchWords.every(word => productName.includes(word));
 
-    if (nameMatch) {
-        return true;
-    } else if (isNumericQuery) {
-        return productId === searchQuery;
-    } else {
-        return false;
-    }
+    return nameMatch || (isNumericQuery && productId === searchQuery);
 }
 
 app.get('/products', async (req, res) => {
@@ -123,8 +98,9 @@ app.get('/products', async (req, res) => {
             const data = await fetchJsonData(query);
             
             const allProducts = await Promise.all(data.result.map(async item => {
+                const url = item.url;
                 const description = await scrapeDescription(item.url);
-
+                const additionalImageUrls = await fetchImageUrls(url);
                 let hinta = formatPrice(item.price);
                 let tarjoushinta = formatPrice(item.salePrice);
                 
@@ -132,19 +108,11 @@ app.get('/products', async (req, res) => {
                     tarjoushinta = null;
                 }
 
-                // Extract image file extension
-                const imageExtension = path.extname(item.image);
+                // Tarkista, onko item.image tyhjä, ja jos on, käytä oletus-URL-osoitetta
+                const imageLink = item.image 
+                ? item.image.replace(stringToReplace, replacementString).replace(/cache\/[a-f0-9]{32}\//, '')
+                : 'https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png';
 
-                // Create additional image URLs
-                const additionalImageUrls = Array.from({ length: 4 }, (_, i) => 
-                    item.image
-                        .replace(stringToReplace, replacementString)
-                        .replace(/cache\/[a-f0-9]{32}\//, '')
-                        .replace(imageExtension, `_${i + 2}${imageExtension}`)
-                );
-
-                // Muokataan pääkuvan URL ja tallennetaan se muuttujaan
-                const mainImageUrl = item.image.replace(stringToReplace, replacementString).replace(/cache\/[a-f0-9]{32}\//, '');
 
                 return {
                     title: item.name,
@@ -153,8 +121,8 @@ app.get('/products', async (req, res) => {
                     brand: item.brandit || "",
                     saleprice: tarjoushinta,
                     price: hinta,
-                    imageLink: item.image.replace(stringToReplace, replacementString).replace(/cache\/[a-f0-9]{32}\//, ''),
-                    additionalImageUrls: await scrapeImageUrls(item.url, mainImageUrl), // Käytä Nightmare-funktiota
+                    imageLink: imageLink,
+                    additionalImageUrls: additionalImageUrls,
                     id: item.sku
                 };
             }));

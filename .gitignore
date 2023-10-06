@@ -1,5 +1,9 @@
 *.xml
 *.json
+index_xml-versio.js
+scripts_varmkop_1.10.js
+views/products_xml-versio.ejs
+views/products_varmuuskopsu_30.9..ejs
 
 # Riippuvuudet
 /node_modules

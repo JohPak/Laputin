@@ -23,7 +23,8 @@ function rotateImage() {
 function showImageURLPopup() {
     document.getElementById('urlButton').addEventListener('click', function() {
         const imageUrl = document.querySelector('.tuotekuva-img').getAttribute('src');
-        document.getElementById('currentUrl').textContent = "Nykyinen tuotekuvan URL-osoite: " + imageUrl;
+        // document.getElementById('currentUrl').textContent = "Nykyinen tuotekuvan URL-osoite: " + imageUrl;
+        document.getElementById('currentUrl').innerHTML = "Nykyinen tuotekuvan URL-osoite: <br>" + imageUrl;
         document.getElementById('newUrl').value = '';
         document.getElementById('urlPopup').style.display = 'block';
     });

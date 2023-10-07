@@ -12,8 +12,7 @@ app.use(express.static('public'));
 // ****** FUNKTIOT **************************
 
 
-
-async function fetchImageUrls(url) {
+async function fetchImageUrls(url, sku) {
     try {
         const { data } = await axios.get(url); // Hae sivun HTML
         const correctedData = data.replace(/\\\//g, '/'); // Korvaa kaikki '\/' merkit '/' merkeillä
@@ -23,10 +22,23 @@ async function fetchImageUrls(url) {
         const matches = correctedData.match(regex);
 
         // Poista "full": alusta ja palauta löydetyt URL:t
-        const imageUrls = matches ? matches.map(match => match.replace(/"full":"/, '')) : [];
+        let imageUrls = matches ? matches.map(match => match.replace(/"full":"/, '')) : [];
 
         // Poista duplikaatit käyttämällä Set-objektia ja spread-syntaksia
-        const uniqueImageUrls = [...new Set(imageUrls)];
+        let uniqueImageUrls = [...new Set(imageUrls)];
+
+        // Jos kuvia ei löytynyt, yritä hakea kuvaa antamastasi URL-osoitteesta
+        // if (uniqueImageUrls[0] === "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" && sku) {
+        //     const fallbackImageUrl = `https://public.keskofiles.com/f/k-ruoka/product/${sku}`;
+        //     try {
+        //         const response = await axios.get(fallbackImageUrl);
+        //         if (response.status === 200) {
+        //             uniqueImageUrls = [fallbackImageUrl];
+        //         }
+        //     } catch (error) {
+        //         console.error("Error fetching the fallback image URL: ", error);
+        //     }
+        // }
 
         return uniqueImageUrls;
     } catch (error) {
@@ -34,7 +46,6 @@ async function fetchImageUrls(url) {
         return [];
     }
 }
-
 
 
 
@@ -65,6 +76,7 @@ async function scrapeDescription(url) {
         return null;
     }
 }
+
 
 async function fetchJsonData(query) {
     const url = `https://eucs13.ksearchnet.com/cloud-search/n-search/search?ticket=klevu-15596371644669941&term=${encodeURIComponent(query)}&paginationStartsFrom=0&sortPrice=false&ipAddress=undefined&analyticsApiKey=klevu-15596371644669941&showOutOfStockProducts=true&klevuFetchPopularTerms=false&klevu_priceInterval=500&fetchMinMaxPrice=true&klevu_multiSelectFilters=true&noOfResults=1&enableFilters=false&filterResults=&visibility=search&category=KLEVU_PRODUCT&sv=229&lsqt=&responseType=json`;
@@ -100,12 +112,13 @@ app.get('/', async (req, res) => {
             const allProducts = await Promise.all(data.result.map(async item => {
                 const url = item.url;
                 const description = await scrapeDescription(item.url);
-                const additionalImageUrls = await fetchImageUrls(url);
+                const additionalImageUrls = await fetchImageUrls(url, item.sku);
                 let hinta = formatPrice(item.price);
                 let tarjoushinta = formatPrice(item.salePrice);
-                
-                if (parseFloat(tarjoushinta) >= parseFloat(hinta)) {
-                    tarjoushinta = null;
+
+                // Jos tarjoushinta ei ole määritelty tai se on suurempi tai yhtä suuri kuin hinta, se asetetaan arvoon null. Muussa tapauksessa se jätetään ennalleen.
+                if (!tarjoushinta || parseFloat(tarjoushinta) >= parseFloat(hinta)) {
+                    hinta = null;
                 }
 
                 // Tarkista, onko item.image tyhjä, ja jos on, käytä oletus-URL-osoitetta

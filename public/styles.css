@@ -23,11 +23,22 @@
     position: relative;
     /* display: none; */
 }
-.logonperaan {
-    font-family: 'ArchivoRegular';
+.laputin, .nimi, .info {
     font-size: 0.85em;
+}
+.laputin {
+    font-family: 'AntiqueOliveCompact';
     color:#d3d3d3;
-    position: relative;
+}
+.info {
+    color:#d3d3d3;
+    font-family: 'ArchivoRegular';
+}
+.nimi {
+    color:#d3d3d3;
+    font-family: 'ArchivoRegular';
+    margin-right: 3px;
+    float: right;
 }
 body {
     font-family: 'ArchivoRegular';

@@ -58,6 +58,7 @@ document.getElementById("searchButton").addEventListener("click", function() {
     this.textContent = 'Odota';
     this.style.backgroundColor = '#868686';
 });
+
 // Tämä kuuntelee lomakkeen 'submit' tapahtumaa, joka tapahtuu myös kun käyttäjä painaa 'Enter'
 document.querySelector('form').addEventListener('submit', function() {
     var btn = document.getElementById("searchButton");

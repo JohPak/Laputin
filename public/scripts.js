@@ -67,6 +67,22 @@ document.querySelector('form').addEventListener('submit', function() {
 });
 
 
+/* Lisätty tulostusfunktio 16.4.2024, joka nollaa .content -elementin esikatseluskaalauksen siksi aikaa kun ollaan tulostamassa ja palauttaa esikatseluskaalauksen takaisin tulostuksen jälkeen. */
+window.removeStyleAndPrint = function() {
+    const contentElement = document.querySelector('.content');
+    const originalTransform = contentElement.style.transform; // Tallenna alkuperäinen transform-arvo
+
+    // Poista style-attribuutti
+    contentElement.removeAttribute('style');
+
+    // Avaa tulostusikkuna
+    window.print();
+
+    // Tulostuksen jälkeen, palauta alkuperäinen esikatseluskaalaus
+    contentElement.style.transform = originalTransform; // Palauta alkuperäinen transform-arvo
+}
+
+
 
 
 

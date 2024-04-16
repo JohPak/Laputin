@@ -39,7 +39,12 @@
     font-family: 'ArchivoRegular';
     margin-right: 3px;
     float: right;
+    text-decoration: underline;
 }
+.nimi:hover {
+    cursor: pointer;
+}
+
 body {
     font-family: 'ArchivoRegular';
     background-image: radial-gradient(#ffffff, #485059);
@@ -456,22 +461,29 @@ _______    _           _
     
     body {
         background-color: #fff; /* Tulostetaan valkoiselle taustalle */
+        background-image: none;
+        margin: 0;
+        padding: 0;
     }
 
     .content {
         margin: 0; /* Poista marginaalit contentilta tulostettaessa */
-        transform: scale(1) !important; /* Nollataan näkymän skaalauksen vaikutukset tulostukseen */
+        padding: 0;
+        /* Nollataan näkymän skaalauksen vaikutukset tulostukseen TÄMÄ HAITTAA TULOSTUSTA, tekee aina tyhjän sivun perään */
+        /* transform: scale(1) !important; */
     }
+    
 
     
     .kehys, .hintalappu {
-        transform: scale(1.33);
+        transform: scale(1.333);
         transform-origin: top;
         /* pakottaa tulostamaan vain yhden sivun */
         position: fixed !important;
     }
     .hintalappu {
         box-shadow: none;
+        border: none;
     }
     /* Piilotetaan magentat apuviivat */
     .hintalappu.active::after {

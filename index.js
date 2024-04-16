@@ -27,19 +27,6 @@ async function fetchImageUrls(url, sku) {
         // Poista duplikaatit käyttämällä Set-objektia ja spread-syntaksia
         let uniqueImageUrls = [...new Set(imageUrls)];
 
-        // Jos kuvia ei löytynyt, yritä hakea kuvaa antamastasi URL-osoitteesta
-        // if (uniqueImageUrls[0] === "https://www.minimani.fi/media/catalog/product/placeholder/default/minimaniph.png" && sku) {
-        //     const fallbackImageUrl = `https://public.keskofiles.com/f/k-ruoka/product/${sku}`;
-        //     try {
-        //         const response = await axios.get(fallbackImageUrl);
-        //         if (response.status === 200) {
-        //             uniqueImageUrls = [fallbackImageUrl];
-        //         }
-        //     } catch (error) {
-        //         console.error("Error fetching the fallback image URL: ", error);
-        //     }
-        // }
-
         return uniqueImageUrls;
     } catch (error) {
         console.error("Error fetching the URL: ", error);

@@ -80,6 +80,8 @@ function initializeScaling() {
 }
 
 
+
+
     
 // Yleinen funktio, joka initialisoi kaikki funktiot
 export function initializeCheckboxFunctions() {

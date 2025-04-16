@@ -106,7 +106,7 @@
                 <div class="sulkuhinta tekstit" contenteditable="true" title="Kirjoita tai muokkaa sulkuhintaa"><%= product.price ? '('+product.price+' €)': '' %></div></div>    
                 <!-- Viiva yhtäkuin-merkin sijaan renderöi tuotekuvauksessa olevan html-koodin -->
                 <div class="kuvaus tekstit" contenteditable="true" title="Kirjoita tai muokkaa tuotekuvausta"><%- product.description %></div>
-                <div class="viivakoodi tekstit" contenteditable="true" title="Kirjoita tai muokkaa viivakoodia"><%= product.id %></div>    
+                <div class="viivakoodi tekstit" contenteditable="true" title="Kirjoita tai muokkaa viivakoodia">*<%= product.id %>*</div>    
 
                 
             </div><!-- END hintalappu -->

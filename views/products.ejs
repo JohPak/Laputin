@@ -17,10 +17,10 @@
 <body>
 
     <div class="toolbar noprint">
-        <span class="logo">minimani </span><span class="laputin"> - Laputin 2.0</span><span class="info"> - Uutta! Nyt voit hakea tuotteen suoraan Laputtimella! Kokeile etsiä nimellä tai ean-koodilla. </span><span class="nimi" onclick="alert('Johanna Pakkala 2024.\nPäivitetty 16.4.2024: korjattu mm. tulostusasettelua.')">Info</span>
+        <span class="logo">minimani </span><span class="laputin"> - Laputin 2.0</span><span class="info"> - Voit etsiä tuotteen nimellä tai ean-koodilla. </span><span class="nimi" onclick="alert('Johanna Pakkala 2024.\nPäivitetty 16.4.2025: korjattu viivakoodia.')">Info</span>
         <div class="search-bar">
             <form action="/" method="GET" style="display: flex; width: 100%;">
-                <input class="hakukentta" type="text" name="query" placeholder="Uutta! Nyt voit hakea tuotteen suoraan tästä! Kokeile etsiä nimellä tai ean-koodilla." value="">
+                <input class="hakukentta" type="text" name="query" placeholder="Etsi tuotetta nimellä tai ean-koodilla." value="">
                 <button class="orange-btn hakunappi" id="searchButton" type="submit">Hae</button>
             </form> 
         </div>
@@ -103,7 +103,7 @@
                 <div class="tuote tekstit" contenteditable="true" title="Kirjoita tai muokkaa tuotenimeä"><%= product.title %></div>
                 <div class="ean tekstit" contenteditable="true" title="Kirjoita tai muokkaa EAN-koodia"><%= product.id %></div>    
                 <div class="hinta tekstit" contenteditable="true" title="Kirjoita tai muokkaa hintaa"><%= product.saleprice %> €
-                <div class="sulkuhinta tekstit" contenteditable="true" title="Kirjoita tai muokkaa sulkuhintaa"><%= product.price ? '('+product.price+' €)': '' %></div></div>    
+                <div class="sulkuhinta tekstit" contenteditable="true" title="Kirjoita tai muokkaa sulkuhintaa. Rivinvaihdon saat painamalla shift + enter"><%= product.price ? '('+product.price+' €)': '' %></div></div>    
                 <!-- Viiva yhtäkuin-merkin sijaan renderöi tuotekuvauksessa olevan html-koodin -->
                 <div class="kuvaus tekstit" contenteditable="true" title="Kirjoita tai muokkaa tuotekuvausta"><%- product.description %></div>
                 <div class="viivakoodi tekstit" contenteditable="true" title="Kirjoita tai muokkaa viivakoodia">*<%= product.id %>*</div>    

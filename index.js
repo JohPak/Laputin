@@ -56,7 +56,13 @@ async function scrapeDescription(url) {
     try {
         const { data } = await axios.get(url);
         const $ = cheerio.load(data);
-        const description = $('.prose').html();
+        const descriptionElement = $('.prose');
+
+        // Poista kaikki inline-tyylit
+        descriptionElement.find('[style]').removeAttr('style');
+
+        // Palauta puhdistettu HTML
+        const description = descriptionElement.html();
         return description;
     } catch (error) {
         console.error("Error fetching the URL: ", error);
@@ -140,7 +146,12 @@ app.get('/', async (req, res) => {
                 res.status(404).send('JSON-tiedostoon ei saatu yhteyttä.');
                 return;
             } else {
-                res.status(500).send('Virhe datan hakemisessa.');
+                errorMessage = 'Virhe datan hakemisessa. Yritä pian uudelleen.';
+                res.status(500).render('products', {
+                    product: null,
+                    errorMessage: errorMessage,
+                    querySubmitted: querySubmitted
+                });
                 return;
             }
         }
